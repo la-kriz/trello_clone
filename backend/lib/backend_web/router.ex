@@ -22,6 +22,8 @@ defmodule BackendWeb.Router do
   scope "/api", BackendWeb do
     pipe_through :api
 
+    resources "/tasks", TaskController, except: [:new, :edit]
+
     get("/ping", PingController, :show)
   end
 
