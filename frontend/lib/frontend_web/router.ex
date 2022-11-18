@@ -16,7 +16,7 @@ defmodule FrontendWeb.Router do
   scope "/", FrontendWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", TaskController, :index
     get("/ping", PingController, :show)
     get("/hello", PingController, :hello)
   end

@@ -1,4 +1,4 @@
-defmodule FrontendWeb.PageController do
+defmodule FrontendWeb.TaskController do
   use FrontendWeb, :controller
 
   def index(conn, _params) do

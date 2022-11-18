@@ -1,4 +1,4 @@
-defmodule FrontendWeb.PageControllerTest do
+defmodule FrontendWeb.TaskControllerTest do
   use FrontendWeb.ConnCase
 
   test "GET /", %{conn: conn} do
