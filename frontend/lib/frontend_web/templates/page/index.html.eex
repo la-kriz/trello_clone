@@ -1,6 +1,29 @@
 <section class="phx-hero">
   <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
+
+  <h1>Listing Tasks</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Assigned person</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for task <- @tasks do %>
+        <tr>
+          <td><%= task["title"] %></td>
+          <td><%= task["description"] %></td>
+          <td><%= task["assigned_person"] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
 </section>
 
 <section class="row">
