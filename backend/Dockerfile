@@ -11,3 +11,5 @@ COPY assets/package.json assets
 COPY assets/package-lock.json assets
 
 CMD mix deps.get && cd assets && npm install && cd .. && mix phx.server
+
+EXPOSE 4001

@@ -7,6 +7,9 @@
 # General application configuration
 use Mix.Config
 
+# config :backend,
+#   frontend_url: "http://0.0.0.0:4000"
+
 # config :frontend,
 #   ecto_repos: [Frontend.Repo]
 

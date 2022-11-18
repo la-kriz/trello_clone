@@ -11,7 +11,7 @@ use Mix.Config
 #   ecto_repos: [Backend.Repo]
 
 config :frontend,
-  backend_url: System.get_env("BACKEND_URL")
+  backend_url: "http://localhost:4001" # System.get_env("BACKEND_URL") # "http://0.0.0.0:4001"
 
 # Configures the endpoint
 config :backend, BackendWeb.Endpoint,

@@ -19,8 +19,9 @@ defmodule Backend.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
+      application: [:frontend],
       mod: {Backend.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools] #, :frontend]
     ]
   end
 
@@ -45,7 +46,8 @@ defmodule Backend.MixProject do
       {:gettext, "~> 0.11"},
       {:cors_plug, "~> 3.0"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:httpoison, "~> 1.8"}
     ]
   end
 
