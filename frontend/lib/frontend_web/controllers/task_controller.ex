@@ -8,6 +8,11 @@ defmodule FrontendWeb.TaskController do
     render(conn, "index.html", tasks: body["data"])
   end
 
+  def new(conn, _params) do
+    # changeset = Board.change_task(%Task{})
+    render(conn, "new.html") #, changeset: changeset)
+  end
+
   def show(conn, %{"id" => id}) do
     {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/tasks/" <> id
     {:ok, body} = response.body |> Jason.decode()

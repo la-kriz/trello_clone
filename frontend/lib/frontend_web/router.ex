@@ -17,6 +17,7 @@ defmodule FrontendWeb.Router do
     pipe_through :browser
 
     get "/", TaskController, :index
+    get "/tasks/new", TaskController, :new
     get "/tasks/:id", TaskController, :show
     get("/ping", PingController, :show)
     get("/hello", PingController, :hello)
