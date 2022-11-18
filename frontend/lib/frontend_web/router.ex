@@ -18,6 +18,7 @@ defmodule FrontendWeb.Router do
 
     get "/", PageController, :index
     get("/ping", PingController, :show)
+    get("/hello", PingController, :hello)
   end
 
   # Other scopes may use custom stacks.
