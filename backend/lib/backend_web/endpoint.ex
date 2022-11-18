@@ -47,6 +47,8 @@ defmodule BackendWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 
+  plug CORSPlug, origin: ["*"] #, origin: ["http://0.0.0.0:4000"]
+
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
