@@ -33,4 +33,24 @@ defmodule FrontendWeb.TaskController do
     render(conn, "show.html", task: body["data"])
   end
 
+  def edit(conn, %{"id" => id}) do
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/tasks/" <> id
+    {:ok, body} = response.body |> Jason.decode()
+    data = body["data"]
+
+    task = %Task{id: data["id"], title: data["title"], description: data["description"], assigned_person: data["assigned_person"]}
+
+    changeset = Board.change_task(task)
+
+    render(conn, "edit.html", task: task, changeset: changeset)
+  end
+
+  def update(conn, %{"id" => id, "task" => task_params}) do
+    body = Jason.encode! %{"task" => task_params}
+
+    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/tasks/" <> id, body, [{"Content-Type", "application/json"}]
+
+    index(conn, %{})
+  end
+
 end
