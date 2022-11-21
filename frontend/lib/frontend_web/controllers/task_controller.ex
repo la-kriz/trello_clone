@@ -17,18 +17,13 @@ defmodule FrontendWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params}) do
-    # case Board.create_task(task_params) do
-    #   {:ok, task} ->
-    #     conn
-    #     |> put_flash(:info, "Task created successfully.")
-        # |>
-        # redirect(to: Routes.task_path(conn, :show, task_params))
+    body = Jason.encode! %{"task" => task_params}
 
-      # {:error, %Ecto.Changeset{} = changeset} ->
-      #   render(conn, "new.html", changeset: changeset)
-    # end
+    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/tasks", body, [{"Content-Type", "application/json"}]
 
-    render(conn, "form.html")
+    {:ok, body} = response.body |> Jason.decode()
+
+    index(conn, %{})
 
   end
 
