@@ -1,6 +1,9 @@
 defmodule FrontendWeb.TaskController do
   use FrontendWeb, :controller
 
+  alias Frontend.Board
+  alias Frontend.Board.Task
+
   def index(conn, _params) do
     {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/tasks"
     {:ok, body} = response.body |> Jason.decode()
@@ -9,8 +12,24 @@ defmodule FrontendWeb.TaskController do
   end
 
   def new(conn, _params) do
-    # changeset = Board.change_task(%Task{})
-    render(conn, "new.html") #, changeset: changeset)
+    changeset = Board.change_task(%Task{})
+    render(conn, "new.html" , changeset: changeset)
+  end
+
+  def create(conn, %{"task" => task_params}) do
+    # case Board.create_task(task_params) do
+    #   {:ok, task} ->
+    #     conn
+    #     |> put_flash(:info, "Task created successfully.")
+        # |>
+        # redirect(to: Routes.task_path(conn, :show, task_params))
+
+      # {:error, %Ecto.Changeset{} = changeset} ->
+      #   render(conn, "new.html", changeset: changeset)
+    # end
+
+    render(conn, "form.html")
+
   end
 
   def show(conn, %{"id" => id}) do

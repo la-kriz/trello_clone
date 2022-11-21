@@ -18,6 +18,7 @@ defmodule FrontendWeb.Router do
 
     get "/", TaskController, :index
     get "/tasks/new", TaskController, :new
+    post "/tasks", TaskController, :create
     get "/tasks/:id", TaskController, :show
     get("/ping", PingController, :show)
     get("/hello", PingController, :hello)
