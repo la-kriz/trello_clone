@@ -19,6 +19,10 @@
           <td><%= task["title"] %></td>
           <td><%= task["description"] %></td>
           <td><%= task["assigned_person"] %></td>
+
+          <td>
+            <span><%= link "Show", to: Routes.task_path(@conn, :show, task["id"]) %></span>
+          </td>
         </tr>
       <% end %>
     </tbody>
