@@ -22,6 +22,7 @@ defmodule FrontendWeb.Router do
     get "/tasks/:id", TaskController, :show
     get "/tasks/:id/edit", TaskController, :edit
     post "/tasks/:id", TaskController, :update
+    get "/tasks/:id/delete", TaskController, :delete
     get("/ping", PingController, :show)
     get("/hello", PingController, :hello)
   end
