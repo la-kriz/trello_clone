@@ -13,7 +13,7 @@
     </thead>
     <tbody>
 
-      <span><%= link "All Lists", to: Routes.list_path(@conn, :index) %></span>
+      <span><%= link "Add List", to: Routes.list_path(@conn, :index) %></span>
 
       <%= for task <- @tasks do %>
         <tr>
