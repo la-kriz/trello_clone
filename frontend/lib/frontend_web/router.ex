@@ -16,6 +16,7 @@ defmodule FrontendWeb.Router do
   scope "/", FrontendWeb do
     pipe_through :browser
 
+    get "/lists", ListController, :index
     get "/", TaskController, :index
     get "/tasks/new", TaskController, :new
     post "/tasks", TaskController, :create
