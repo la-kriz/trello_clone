@@ -2,6 +2,8 @@
 
   <span><%= link "Add List", to: Routes.list_path(@conn, :index) %></span>
 
+  <h1><%= @list_title %></h1>
+
   <div>
     <%= for task <- @tasks do %>
       <div class="box" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">

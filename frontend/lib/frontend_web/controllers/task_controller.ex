@@ -5,10 +5,19 @@ defmodule FrontendWeb.TaskController do
   alias Frontend.Api.Board.Task
 
   def index(conn, _params) do
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/tasks"
-    {:ok, body} = response.body |> Jason.decode()
-    # tasks = for {key, val} <- body["data"], into: %{}, do: {String.to_atom(key), val}
-    render(conn, "index.html", tasks: body["data"])
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists"
+    {:ok, list_body} = response.body |> Jason.decode()
+
+    data = list_body["data"]
+    [head | _] = data
+
+    list_id = head["id"]
+    list_title = head["title"]
+
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> to_string(list_id) <> "/tasks"
+    {:ok, task_body} = response.body |> Jason.decode()
+
+    render(conn, "index.html", tasks: task_body["data"], list_title: list_title)
   end
 
   def new(conn, _params) do
