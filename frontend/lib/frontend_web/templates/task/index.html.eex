@@ -1,41 +1,28 @@
-<section class="phx-hero">
-  <h1>Listing Tasks</h1>
+<section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Assigned person</th>
+  <span><%= link "Add List", to: Routes.list_path(@conn, :index) %></span>
 
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
+  <div>
+    <%= for task <- @tasks do %>
+      <div class="box" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
+        <div class="box-content">
+          <h1><%= task["title"] %></h1>
+          <h3><%= task["description"] %></h3>
+          <h3><%= task["assigned_person"] %></h3>
+        </div>
 
-      <span><%= link "Add List", to: Routes.list_path(@conn, :index) %></span>
+        <td>
+          <span><%= link "Show", to: Routes.task_path(@conn, :show, task["id"]) %></span>
+          <span><%= link "Edit", to: Routes.task_path(@conn, :edit, task["id"]) %></span>
+          <span>
+            <%= link "Delete", to: Routes.task_path(@conn, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
+          </span>
+        </td>
 
-      <%= for task <- @tasks do %>
-        <tr>
-          <td><%= task["title"] %></td>
-          <td><%= task["description"] %></td>
-          <td><%= task["assigned_person"] %></td>
-
-          <td>
-            <span><%= link "Show", to: Routes.task_path(@conn, :show, task["id"]) %></span>
-            <span><%= link "Edit", to: Routes.task_path(@conn, :edit, task["id"]) %></span>
-            <span><%= link "Delete", to: Routes.task_path(@conn, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %></span>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        <br/>
+      </div>
+    <% end %>
+  </div>
 
   <span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
-</section>
-
-<section class="row">
-  <article class="column">
-    <h2>Made with ❤️ by kriz</h2>
-  </article>
 </section>

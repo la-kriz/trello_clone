@@ -20,6 +20,11 @@
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= @inner_content %>
+      <section class="row">
+        <article class="column">
+          <h2>Made with ❤️ by kriz</h2>
+        </article>
+      </section>
     </main>
   </body>
 </html>

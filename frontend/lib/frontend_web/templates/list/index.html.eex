@@ -33,10 +33,3 @@
 
   <span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
 </section>
-
-<section class="row">
-  <article class="column">
-  </article>
-  <article class="column">
-  </article>
-</section>
