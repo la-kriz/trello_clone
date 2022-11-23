@@ -1,8 +1,8 @@
 defmodule FrontendWeb.TaskController do
   use FrontendWeb, :controller
 
-  alias Frontend.Board
-  alias Frontend.Board.Task
+  alias Frontend.Api.Board
+  alias Frontend.Api.Board.Task
 
   def index(conn, _params) do
     {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/tasks"

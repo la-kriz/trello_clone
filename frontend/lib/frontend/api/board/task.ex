@@ -1,4 +1,4 @@
-defmodule Frontend.Board.Task do
+defmodule Frontend.Api.Board.Task do
   use Ecto.Schema
   import Ecto.Changeset
 
