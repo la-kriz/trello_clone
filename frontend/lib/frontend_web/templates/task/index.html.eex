@@ -3,10 +3,14 @@
   <span><%= link "Add List", to: Routes.list_path(@conn, :new) %></span>
 
   <div style="border: solid; border-color: #a94442; border-width: thin; display: flex;">
+
     <%= for list <- @tasks do %>
       <div style="border: solid; border-color: beige; border-width: thick; width: 410px; margin-left: 10px; margin-right: 10px;">
+
         <h1><%= list["title"] %></h1>
+
         <span><%= link "Delete List", to: Routes.list_path(@conn, :delete, list["id"]), method: :delete %></span>
+
         <%= for task <- list["tasks"] do %>
           <div class="box" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
             <div class="box-content">
@@ -26,9 +30,12 @@
             <br/>
           </div>
         <% end %>
+
+        <span><%= link "New Task", to: Routes.task_path(@conn, :new, list["id"]) %></span>
+
       </div>
     <% end %>
+
   </div>
 
-  <span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
 </section>

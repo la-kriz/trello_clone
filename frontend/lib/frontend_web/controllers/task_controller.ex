@@ -13,15 +13,15 @@ defmodule FrontendWeb.TaskController do
     render(conn, "index.html", tasks: data)
   end
 
-  def new(conn, _params) do
+  def new(conn, %{"list_id" => list_id}) do
     changeset = Board.change_task(%Task{})
-    render(conn, "new.html" , changeset: changeset)
+    render(conn, "new.html" , changeset: changeset, list_id: list_id)
   end
 
-  def create(conn, %{"task" => task_params}) do
-    body = Jason.encode! %{"task" => task_params}
+  def create(conn, %{"task" => task_params, "list_id" => list_id}) do
+    body = Jason.encode! %{"task" => Map.put(task_params, :list_id, list_id)}
 
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/tasks", body, [{"Content-Type", "application/json"}]
+    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks", body, [{"Content-Type", "application/json"}]
 
     {:ok, body} = response.body |> Jason.decode()
 

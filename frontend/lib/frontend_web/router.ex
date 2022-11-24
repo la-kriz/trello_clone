@@ -20,8 +20,8 @@ defmodule FrontendWeb.Router do
     get "/lists/new", ListController, :new
     delete "/lists/:list_id/", ListController, :delete
     get "/", TaskController, :index
-    get "/tasks/new", TaskController, :new
-    post "/tasks", TaskController, :create
+    get "/lists/:list_id/tasks/new", TaskController, :new
+    post "/lists/:list_id/tasks", TaskController, :create
     get "/tasks/:id", TaskController, :show
     get "/tasks/:id/edit", TaskController, :edit
     post "/tasks/:id", TaskController, :update
