@@ -23,8 +23,10 @@ defmodule BackendWeb.Router do
     pipe_through :api
 
     resources "/lists", ListController, except: [:edit] do
-      resources "/tasks", TaskController, except: [:new, :edit]
+      resources "/tasks", TaskController, except: [:new, :edit, :delete]
     end
+
+    delete "/tasks/:id", TaskController, :delete
 
     get("/ping", PingController, :show)
   end

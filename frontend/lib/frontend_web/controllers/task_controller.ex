@@ -58,7 +58,7 @@ defmodule FrontendWeb.TaskController do
   def delete(conn, %{"id" => id}) do
     {:ok, response} = HTTPoison.delete "http://host.docker.internal:4001/api/tasks/" <> id
 
-    index(conn, %{})
+    redirect(conn, to: Routes.task_path(conn, :index))
   end
 
 end
