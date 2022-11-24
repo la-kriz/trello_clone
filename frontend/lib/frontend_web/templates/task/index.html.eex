@@ -2,30 +2,31 @@
 
   <span><%= link "Add List", to: Routes.list_path(@conn, :index) %></span>
 
-  <div style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
-    <h1><%= @list_title %></h1>
+  <div style="border: solid; border-color: #a94442; border-width: thin; display: flex;">
+    <%= for list <- @tasks do %>
+      <div style="border: solid; border-color: beige; border-width: thick; width: 410px; margin-left: 10px; margin-right: 10px;">
+        <h1><%= list["title"] %></h1>
+        <%= for task <- list["tasks"] do %>
+          <div class="box" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
+            <div class="box-content">
+              <h1><%= task["title"] %></h1>
+              <h3><%= task["description"] %></h3>
+              <h3><%= task["assigned_person"] %></h3>
+            </div>
 
-    <div>
-      <%= for task <- @tasks do %>
-        <div class="box" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
-          <div class="box-content">
-            <h1><%= task["title"] %></h1>
-            <h3><%= task["description"] %></h3>
-            <h3><%= task["assigned_person"] %></h3>
+            <td>
+              <span><%= link "Show", to: Routes.task_path(@conn, :show, task["id"]) %></span>
+              <span><%= link "Edit", to: Routes.task_path(@conn, :edit, task["id"]) %></span>
+              <span>
+                <%= link "Delete", to: Routes.task_path(@conn, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
+              </span>
+            </td>
+
+            <br/>
           </div>
-
-          <td>
-            <span><%= link "Show", to: Routes.task_path(@conn, :show, task["id"]) %></span>
-            <span><%= link "Edit", to: Routes.task_path(@conn, :edit, task["id"]) %></span>
-            <span>
-              <%= link "Delete", to: Routes.task_path(@conn, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
-            </span>
-          </td>
-
-          <br/>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
   <span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
