@@ -22,7 +22,7 @@ defmodule FrontendWeb.Router do
     get "/", TaskController, :index
     get "/lists/:list_id/tasks/new", TaskController, :new
     post "/lists/:list_id/tasks", TaskController, :create
-    get "/tasks/:id", TaskController, :show
+    get "/lists/:list_id/tasks/:id", TaskController, :show
     get "/tasks/:id/edit", TaskController, :edit
     post "/tasks/:id", TaskController, :update
     delete "/tasks/:id/delete", TaskController, :delete

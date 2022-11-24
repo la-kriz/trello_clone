@@ -29,8 +29,8 @@ defmodule FrontendWeb.TaskController do
 
   end
 
-  def show(conn, %{"id" => id}) do
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/tasks/" <> id
+  def show(conn, %{"list_id" => list_id, "id" => id}) do
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id
     {:ok, body} = response.body |> Jason.decode()
     render(conn, "show.html", task: body["data"])
   end
