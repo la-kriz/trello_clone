@@ -18,4 +18,10 @@ defmodule FrontendWeb.ListController do
     redirect(conn, to: Routes.task_path(conn, :index))
   end
 
+  def delete(conn, %{"list_id" => list_id}) do
+    {:ok, response} = HTTPoison.delete "http://host.docker.internal:4001/api/lists/" <> list_id
+
+    redirect(conn, to: Routes.task_path(conn, :index))
+  end
+
 end
