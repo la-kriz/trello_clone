@@ -6,8 +6,8 @@ defmodule BackendWeb.TaskController do
 
   action_fallback BackendWeb.FallbackController
 
-  def index(conn, _params) do
-    tasks = Board.list_tasks()
+  def index(conn, %{"list_id" => list_id}) do
+    tasks = Board.list_tasks(String.to_integer(list_id))
     render(conn, "index.json", tasks: tasks)
   end
 

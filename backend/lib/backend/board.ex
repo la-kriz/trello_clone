@@ -7,6 +7,7 @@ defmodule Backend.Board do
   alias Backend.Repo
 
   alias Backend.Board.Task
+  alias Backend.Board.List
 
   @doc """
   Returns the list of tasks.
@@ -19,6 +20,23 @@ defmodule Backend.Board do
   """
   def list_tasks do
     Repo.all(Task)
+  end
+
+  @doc """
+  Returns the list of tasks by list.
+
+  ## Examples
+
+      iex> list_tasks(1)
+      [%Task{}, ...]
+
+  """
+  def list_tasks(list_id) do
+    tasks = from task in Task,
+      join: list in List,
+      on: list.id == task.list_id,
+      where: list.id == ^list_id
+    Repo.all(tasks)
   end
 
   @doc """
@@ -101,8 +119,6 @@ defmodule Backend.Board do
   def change_task(%Task{} = task, attrs \\ %{}) do
     Task.changeset(task, attrs)
   end
-
-  alias Backend.Board.List
 
   @doc """
   Returns the list of lists.
