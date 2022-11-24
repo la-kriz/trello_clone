@@ -130,7 +130,14 @@ defmodule Backend.Board do
 
   """
   def list_lists do
-    Repo.all(List)
+    base_query = from(lists in List);
+    lists_with_tasks_preloaded = from(
+      list in base_query,
+      left_join: task in Task,
+      on: task.list_id == list.id,
+      preload: [tasks: task]
+    )
+    Repo.all(lists_with_tasks_preloaded)
   end
 
   @doc """
