@@ -3,6 +3,7 @@ defmodule BackendWeb.TaskController do
 
   alias Backend.Board
   alias Backend.Board.Task
+  alias Backend.Board.List
 
   action_fallback BackendWeb.FallbackController
 
@@ -12,10 +13,11 @@ defmodule BackendWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params}) do
+    task_params = Map.put(task_params, "list_id", task_params["list_id"])
+
     with {:ok, %Task{} = task} <- Board.create_task(task_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.task_path(conn, :show, task))
       |> render("show.json", task: task)
     end
   end

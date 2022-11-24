@@ -17,7 +17,7 @@ defmodule Backend.Board.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:title, :description, :assigned_person])
+    |> cast(attrs, [:title, :description, :assigned_person, :list_id])
     |> validate_required([:title, :description, :assigned_person])
     |> assoc_constraint(:list)
   end
