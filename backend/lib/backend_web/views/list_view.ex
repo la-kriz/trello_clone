@@ -13,6 +13,8 @@ defmodule BackendWeb.ListView do
   def render("list.json", %{list: list}) do
     %{id: list.id,
       title: list.title,
-      position: list.position}
+      position: list.position,
+      tasks: list.tasks
+    }
   end
 end

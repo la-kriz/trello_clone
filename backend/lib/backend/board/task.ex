@@ -3,6 +3,8 @@ defmodule Backend.Board.Task do
   import Ecto.Changeset
   alias Backend.Board.List
 
+  @derive {Jason.Encoder, only: [:id, :title, :description, :assigned_person]}
+
   schema "tasks" do
     field :assigned_person, :string
     field :description, :string

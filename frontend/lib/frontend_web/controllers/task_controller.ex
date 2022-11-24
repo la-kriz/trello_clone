@@ -14,10 +14,10 @@ defmodule FrontendWeb.TaskController do
     list_id = head["id"]
     list_title = head["title"]
 
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> to_string(list_id) <> "/tasks"
-    {:ok, task_body} = response.body |> Jason.decode()
+#    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> to_string(list_id) <> "/tasks"
+#    {:ok, task_body} = head["tasks"]
 
-    render(conn, "index.html", tasks: task_body["data"], list_title: list_title)
+    render(conn, "index.html", tasks: head["tasks"], list_title: list_title)
   end
 
   def new(conn, _params) do
