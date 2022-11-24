@@ -1,6 +1,6 @@
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
-  <span><%= link "Add List", to: Routes.list_path(@conn, :index) %></span>
+  <span><%= link "Add List", to: Routes.list_path(@conn, :new) %></span>
 
   <div style="border: solid; border-color: #a94442; border-width: thin; display: flex;">
     <%= for list <- @tasks do %>

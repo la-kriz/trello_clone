@@ -12,4 +12,10 @@ defmodule FrontendWeb.ListController do
     render(conn, "index.html", tasks: body["data"])
   end
 
+  def new(conn, _params) do
+    {:ok, _response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/new"
+
+    redirect(conn, to: Routes.task_path(conn, :index))
+  end
+
 end
