@@ -22,7 +22,7 @@ defmodule BackendWeb.Router do
   scope "/api", BackendWeb do
     pipe_through :api
 
-    resources "/lists", ListController, except: [:new, :edit] do
+    resources "/lists", ListController, except: [:edit] do
       resources "/tasks", TaskController, except: [:new, :edit]
     end
 
