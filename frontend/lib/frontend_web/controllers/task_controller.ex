@@ -35,8 +35,8 @@ defmodule FrontendWeb.TaskController do
     render(conn, "show.html", task: body["data"])
   end
 
-  def edit(conn, %{"id" => id}) do
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/tasks/" <> id
+  def edit(conn, %{"list_id" => list_id, "id" => id}) do
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id
     {:ok, body} = response.body |> Jason.decode()
     data = body["data"]
 
@@ -44,15 +44,15 @@ defmodule FrontendWeb.TaskController do
 
     changeset = Board.change_task(task)
 
-    render(conn, "edit.html", task: task, changeset: changeset)
+    render(conn, "edit.html", task: task, changeset: changeset, list_id: list_id)
   end
 
-  def update(conn, %{"id" => id, "task" => task_params}) do
+  def update(conn, %{"list_id" => list_id, "id" => id, "task" => task_params}) do
     body = Jason.encode! %{"task" => task_params}
 
-    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/tasks/" <> id, body, [{"Content-Type", "application/json"}]
+    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id, body, [{"Content-Type", "application/json"}]
 
-    index(conn, %{})
+    redirect(conn, to: Routes.task_path(conn, :index))
   end
 
   def delete(conn, %{"id" => id}) do
