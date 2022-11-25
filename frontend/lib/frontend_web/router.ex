@@ -18,6 +18,7 @@ defmodule FrontendWeb.Router do
 
     get "/lists", ListController, :index
     get "/lists/new", ListController, :new
+    get "/lists/:list_id/", ListController, :edit
     delete "/lists/:list_id/", ListController, :delete
 
     get "/", TaskController, :index
