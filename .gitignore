@@ -42,3 +42,10 @@ um-*.tar
 /assets/yarn-error.log
 /priv/static
 .elixir_ls/
+
+
+# IntelliJ IDEA related
+/backend/.idea
+/backend/backend.iml
+/frontend/.idea
+/frontend/frontend.iml
