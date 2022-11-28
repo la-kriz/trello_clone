@@ -14,4 +14,8 @@ defmodule FrontendWeb.TaskLive do
     FrontendWeb.TaskView.render("index.html", assigns)
   end
 
+  def handle_event("edit_list_title", %{}, socket) do
+    IO.puts "Hello"
+    {:noreply, socket}
+  end
 end
