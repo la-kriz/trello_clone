@@ -14,8 +14,13 @@ defmodule FrontendWeb.TaskLive do
     FrontendWeb.TaskView.render("index.html", assigns)
   end
 
-  def handle_event("edit_list_title", %{}, socket) do
-    IO.puts "Hello"
-    {:noreply, socket}
+  def handle_event("edit_list_title", %{"list_id" => list_id, "new_title" => new_title_param}, socket) do
+      list_params = %{"title" => new_title_param}
+      body = Jason.encode! %{"list" => list_params}
+
+      {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
+                                      body, [{"Content-Type", "application/json"}]
+
+      {:noreply, socket}
   end
 end

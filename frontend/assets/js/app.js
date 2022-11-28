@@ -35,7 +35,7 @@ Hooks.EditListTitle = {
         // } : JSON.parse(fromStorage);
         // I don't feel like running this command everytime I need to reference the tbody,
         // thus, the reference to it here.
-        const tbody = document.querySelectorAll('#definitions');
+        const tbody = document.querySelectorAll('.definitions');
 
         // adding an event listener on the tbody means that any of the same event that bubble up from it's children will reach here.
         // This means you can add children in dynamically without needing to worry so long as they have
@@ -78,24 +78,24 @@ Hooks.EditListTitle = {
 
             // a parent, a row, and a newly minted text node walk into a bar...
             const parent = e.target.parentElement;
-            const row = parent.parentElement;
+            // const row = parent.parentElement;
             const text = document.createTextNode(e.target.value || ' ');
             /* .isConnected refers to it's state in the DOM. this was some work to try and stop an error that was
                 ocurring due to this being simultaneously the 'blur' 'keypress' event handler. Alas, it didn't.
               If the error is really an issue, then wrapping the parent.replaceChild in a try/catch block should solve it for you.*/
             if (e.target.isConnected) {
                 // use the dataset key + the textarea's value to update the definitions.
-                definitions[row.dataset.key] = e.target.value;
+                // definitions[row.dataset.key] = e.target.value;
                 // write those to the local storage
-                localStorage.setItem('definitions', JSON.stringify(definitions));
+                // localStorage.setItem('definitions', JSON.stringify(definitions));
 
                 // Or, if you are using a database, you would use some variety of AJAX/XHR call here.
-                that.pushEvent('edit_list_title', {});
+                that.pushEvent('edit_list_title', {list_id: parent.parentElement.parentElement.id, new_title: e.target.value});
 
                 // get rid of our text element
                 parent.replaceChild(text, e.target);
                 // reset the editorshown value in case we need to update this again
-                row.dataset.editorShown = false;
+                // row.dataset.editorShown = false;
 
             }
 
