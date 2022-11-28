@@ -67,7 +67,7 @@ tbody.forEach(function(elem) {
         // the textarea gets some class
         textarea.classList.add('full');
         // and a placeholder
-        textarea.placeholder = "Double click to translate";
+        textarea.placeholder = "Input new List Title";
 
         textarea.setAttribute("type", "text");
 
@@ -99,6 +99,7 @@ function blurOrKeypress(e) {
         localStorage.setItem('definitions', JSON.stringify(definitions));
 
         // Or, if you are using a database, you would use some variety of AJAX/XHR call here.
+
 
         // get rid of our text element
         parent.replaceChild(text, e.target);

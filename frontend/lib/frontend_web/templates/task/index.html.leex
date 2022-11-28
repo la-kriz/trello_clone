@@ -1,6 +1,6 @@
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
-  <span><%= link "Add List", to: Routes.list_path(@conn, :new) %></span>
+  <span><%= link "Add List", to: Routes.list_path(FrontendWeb.Endpoint, :new) %></span>
 
   <div style="border: solid; border-color: #a94442; border-width: thin; display: flex;">
 
@@ -12,7 +12,7 @@
           <!-- HTML generated later -->
         </div>
 
-        <span><%= link "Delete List", to: Routes.list_path(@conn, :delete, list["id"]), method: :delete %></span>
+        <span><%= link "Delete List", to: Routes.list_path(FrontendWeb.Endpoint, :delete, list["id"]), method: :delete %></span>
 
         <div class="sortable container">
           <%= for task <- list["tasks"] do %>
@@ -24,10 +24,10 @@
               </div>
 
               <td>
-                <span><%= link "Show", to: Routes.task_path(@conn, :show, list["id"], task["id"]) %></span>
-                <span><%= link "Edit", to: Routes.task_path(@conn, :edit, list["id"], task["id"]) %></span>
+                <span><%= link "Show", to: Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]) %></span>
+                <span><%= link "Edit", to: Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]) %></span>
                 <span>
-                  <%= link "Delete", to: Routes.task_path(@conn, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
+                  <%= link "Delete", to: Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
                 </span>
               </td>
 
@@ -36,7 +36,7 @@
           <% end %>
         </div>
 
-        <span><%= link "New Task", to: Routes.task_path(@conn, :new, list["id"]) %></span>
+        <span><%= link "New Task", to: Routes.task_path(FrontendWeb.Endpoint, :new, list["id"]) %></span>
 
       </div>
     <% end %>

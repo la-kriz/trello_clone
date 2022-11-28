@@ -17,7 +17,7 @@ defmodule FrontendWeb.Router do
   scope "/", FrontendWeb do
     pipe_through :browser
 
-    get "/lists", ListController, :index
+    live "/", TaskLive
     get "/lists/new", ListController, :new
     delete "/lists/:list_id/", ListController, :delete
 
