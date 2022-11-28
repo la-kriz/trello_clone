@@ -14,25 +14,27 @@
 
         <span><%= link "Delete List", to: Routes.list_path(@conn, :delete, list["id"]), method: :delete %></span>
 
-        <%= for task <- list["tasks"] do %>
-          <div class="box" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
-            <div class="box-content">
-              <h1><%= task["title"] %></h1>
-              <h3><%= task["description"] %></h3>
-              <h3><%= task["assigned_person"] %></h3>
+        <div class="sortable container">
+          <%= for task <- list["tasks"] do %>
+            <div class="box draggable" draggable="true" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
+              <div class="box-content">
+                <h1><%= task["title"] %></h1>
+                <h3><%= task["description"] %></h3>
+                <h3><%= task["assigned_person"] %></h3>
+              </div>
+
+              <td>
+                <span><%= link "Show", to: Routes.task_path(@conn, :show, list["id"], task["id"]) %></span>
+                <span><%= link "Edit", to: Routes.task_path(@conn, :edit, list["id"], task["id"]) %></span>
+                <span>
+                  <%= link "Delete", to: Routes.task_path(@conn, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
+                </span>
+              </td>
+
+              <br/>
             </div>
-
-            <td>
-              <span><%= link "Show", to: Routes.task_path(@conn, :show, list["id"], task["id"]) %></span>
-              <span><%= link "Edit", to: Routes.task_path(@conn, :edit, list["id"], task["id"]) %></span>
-              <span>
-                <%= link "Delete", to: Routes.task_path(@conn, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
-              </span>
-            </td>
-
-            <br/>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
 
         <span><%= link "New Task", to: Routes.task_path(@conn, :new, list["id"]) %></span>
 
