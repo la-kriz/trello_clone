@@ -135,7 +135,8 @@ defmodule Backend.Board do
       list in base_query,
       left_join: task in Task,
       on: task.list_id == list.id,
-      preload: [tasks: task]
+      preload: [tasks: task],
+      order_by: list.inserted_at
     )
     Repo.all(lists_with_tasks_preloaded)
   end
