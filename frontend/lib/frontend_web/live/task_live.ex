@@ -32,6 +32,25 @@ defmodule FrontendWeb.TaskLive do
     "before_task_position" => before_task_position,
     "current_task_position" => current_task_position,
     "after_task_position" => after_task_position
+  }, socket) when is_nil(after_task_position) do
+
+    new_position_param = D.add(before_task_position, D.new(50))
+
+    task_params = %{"position" => D.to_string(new_position_param)}
+    body = Jason.encode! %{"task" => task_params}
+
+    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> current_task_id,
+                                    body, [{"Content-Type", "application/json"}]
+
+    {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
+  end
+
+  def handle_event("reorder_task", %{
+    "list_id" => list_id,
+    "current_task_id" => current_task_id,
+    "before_task_position" => before_task_position,
+    "current_task_position" => current_task_position,
+    "after_task_position" => after_task_position
   }, socket) do
 
     before_task_position = D.new(before_task_position)

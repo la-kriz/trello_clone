@@ -154,7 +154,7 @@ Hooks.ReorderTask = {
                     current_task_id: draggable.id,
                     current_task_position: draggable.dataset.position,
                     before_task_position: beforeElement.dataset.position,
-                    after_task_position: afterElement.dataset.position,
+                    after_task_position: afterElement ? afterElement.dataset.position : null,
                 }, (reply, ref) => {
                     draggable.dataset.position = reply.new_position
                 })
