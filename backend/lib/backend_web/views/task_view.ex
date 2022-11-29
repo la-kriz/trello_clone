@@ -11,9 +11,12 @@ defmodule BackendWeb.TaskView do
   end
 
   def render("task.json", %{task: task}) do
-    %{id: task.id,
+    %{
+      id: task.id,
       title: task.title,
       description: task.description,
-      assigned_person: task.assigned_person}
+      assigned_person: task.assigned_person,
+      position: task.position
+    }
   end
 end
