@@ -16,7 +16,9 @@
 
         <div id="<%= list["id"] %>" class="sortable container">
           <%= for task <- list["tasks"] do %>
-            <div class="box draggable" draggable="true" style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
+            <div id="<%= task["id"] %>" class="box draggable" draggable="true"
+                 phx-hook="ReorderTask" data-position="<%= task["position"] %>"
+                 style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
               <div class="box-content">
                 <h1><%= task["title"] %></h1>
                 <h3><%= task["description"] %></h3>

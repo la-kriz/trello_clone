@@ -131,45 +131,81 @@ Hooks.EditListTitle = {
 }
 
 
-const draggables = document.querySelectorAll('.draggable')
-const containers = document.querySelectorAll('.sortable.container')
+Hooks.ReorderTask = {
+    mounted() {
+        const that = this;
 
-draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', () => {
-        draggable.classList.add('dragging')
-    })
+        const draggables = document.querySelectorAll('.draggable')
+        const containers = document.querySelectorAll('.sortable.container')
 
-    draggable.addEventListener('dragend', () => {
-        draggable.classList.remove('dragging')
-    })
-})
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', () => {
+                draggable.classList.add('dragging')
+            })
 
-containers.forEach(container => {
-    container.addEventListener('dragover', e => {
-        e.preventDefault()
-        const afterElement = getDragAfterElement(container, e.clientY)
-        const draggable = document.querySelector('.dragging')
-        if (afterElement == null) {
-            container.appendChild(draggable)
-        } else {
-            container.insertBefore(draggable, afterElement)
+            draggable.addEventListener('dragend', e => {
+
+                const container = draggable.parentElement
+                const beforeElement = getDragBeforeElement(container, e.clientY)
+                const afterElement = getDragAfterElement(container, e.clientY)
+
+                that.pushEvent('reorder_task', {
+                    list_id: container.id,
+                    current_task_id: draggable.id,
+                    current_task_position: draggable.dataset.position,
+                    before_task_position: beforeElement.dataset.position,
+                    after_task_position: afterElement.dataset.position,
+                }, (reply, ref) => {
+                    draggable.dataset.position = reply.new_position
+                })
+
+                draggable.classList.remove('dragging')
+            })
+        })
+
+        containers.forEach(container => {
+            container.addEventListener('dragover', e => {
+                e.preventDefault()
+                const afterElement = getDragAfterElement(container, e.clientY)
+                const draggable = document.querySelector('.dragging')
+                if (afterElement == null) {
+                    container.appendChild(draggable)
+                } else {
+                    container.insertBefore(draggable, afterElement)
+                }
+            })
+        })
+
+        function getDragBeforeElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect()
+                const offset = y - box.bottom - box.height / 2
+                if (offset > 0 && offset < closest.offset) {
+                    return { offset: offset, element: child }
+                } else {
+                    return closest
+                }
+            }, { offset: Number.POSITIVE_INFINITY }).element
         }
-    })
-})
 
-function getDragAfterElement(container, y) {
-    const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
 
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-        if (offset < 0 && offset > closest.offset) {
-            return { offset: offset, element: child }
-        } else {
-            return closest
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect()
+                const offset = y - box.top - box.height / 2
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child }
+                } else {
+                    return closest
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element
         }
-    }, { offset: Number.NEGATIVE_INFINITY }).element
+    },
 }
+
 
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
