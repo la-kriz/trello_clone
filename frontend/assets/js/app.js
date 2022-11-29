@@ -145,19 +145,21 @@ Hooks.ReorderTask = {
 
             draggable.addEventListener('dragend', e => {
 
-                const container = draggable.parentElement
-                const beforeElement = getDragBeforeElement(container, e.clientY)
-                const afterElement = getDragAfterElement(container, e.clientY)
+                if (draggable.classList.contains('dragging')) {
+                    const container = draggable.parentElement
+                    const beforeElement = getDragBeforeElement(container, e.clientY)
+                    const afterElement = getDragAfterElement(container, e.clientY)
 
-                that.pushEvent('reorder_task', {
-                    list_id: container.id,
-                    current_task_id: draggable.id,
-                    current_task_position: draggable.dataset.position,
-                    before_task_position: beforeElement.dataset.position,
-                    after_task_position: afterElement ? afterElement.dataset.position : null,
-                }, (reply, ref) => {
-                    draggable.dataset.position = reply.new_position
-                })
+                    that.pushEvent('reorder_task', {
+                        list_id: container.id,
+                        current_task_id: draggable.id,
+                        current_task_position: draggable.dataset.position,
+                        before_task_position: beforeElement ? beforeElement.dataset.position : null,
+                        after_task_position: afterElement ? afterElement.dataset.position : null,
+                    }, (reply, ref) => {
+                        draggable.dataset.position = reply.new_position
+                    })
+                }
 
                 draggable.classList.remove('dragging')
             })
