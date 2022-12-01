@@ -64,8 +64,14 @@
           <% end %>
         </div>
 
-        <span><%= link "New Task", to: Routes.task_path(FrontendWeb.Endpoint, :new, list["id"]) %></span>
-
+        <span>
+          <a href="<%= Routes.task_path(FrontendWeb.Endpoint, :new, list["id"]) %>" style="color: gray;">
+            <span class="icon">
+              <i class="fa fa-plus" style="color: gray; font-size: 2rem;"> </i>
+            </span>
+            Add a card
+          </a>
+        </span>
       </div>
     <% end %>
 
