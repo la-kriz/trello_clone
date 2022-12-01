@@ -5,7 +5,7 @@
   <div style="border: solid; border-color: #a94442; border-width: thin; display: flex;">
 
     <%= for list <- @tasks do %>
-      <div style="border: solid; border-color: beige; border-width: thick; width: 410px; margin-left: 10px; margin-right: 10px;">
+      <div class="card" style="width: 410px; margin-left: 10px; margin-right: 10px; ">
 
         <div id="<%= list["id"] %>" class="definitions" phx-hook="EditListTitle">
           <h2 data-editor-shown="false" data-key="title1"><p><%= list["title"] %></p></h2>
@@ -18,7 +18,7 @@
           <%= for task <- list["tasks"] do %>
             <div id="<%= task["id"] %>" class="box draggable" draggable="true"
                  phx-hook="ReorderTask" data-position="<%= task["position"] %>"
-                 style="border: solid; border-color: #a94442; border-width: thin; width: 400px;">
+                 style="border: solid; border-color: #a94442; border-width: thin; width: 390px;">
               <div class="box-content">
                 <h1><%= task["title"] %></h1>
                 <h3><%= task["description"] %></h3>
