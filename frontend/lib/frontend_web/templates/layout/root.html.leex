@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%= csrf_meta_tag() %>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <%= live_title_tag assigns[:page_title] || "MyApp" %>
-  <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <%= csrf_meta_tag() %>
   <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
 </head>
 <body>
-<%= @inner_content %>
+<header>
+  <section class="container">
+    <div class="is-vcentered is-flex-direction-column is-justify-content-flex-end">
+      <h1 class="title is-1">Phx TODO</h1>
+    </div>
+  </section>
+</header>
+<main role="main" class="container">
+  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+  <%= @inner_content %>
+  <section class="row">
+    <article class="column">
+      <h2>Made with ❤️ by kriz</h2>
+    </article>
+  </section>
+</main>
 </body>
 </html>

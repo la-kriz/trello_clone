@@ -12,7 +12,7 @@
   <body>
     <header>
       <section class="container">
-        <div class="olumns is-vcentered is-flex-direction-column is-justify-content-flex-end">
+        <div class="columns is-vcentered is-flex-direction-column is-justify-content-flex-end">
           <h1 class="title is-1">Phx TODO</h1>
         </div>
       </section>
