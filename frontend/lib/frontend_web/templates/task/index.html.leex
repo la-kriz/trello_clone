@@ -1,6 +1,6 @@
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
-  <div style="border: solid; border-color: #a94442; border-width: thin; display: flex;">
+  <div style="border: solid; border-color: #a94442; border-width: thin; display: flex; overflow: auto">
 
     <%= for list <- @tasks do %>
       <div class="card" style="width: 410px; margin-left: 10px; margin-right: 10px; ">
@@ -25,7 +25,7 @@
           </a>
         </span>
 
-        <div id="<%= list["id"] %>" class="sortable container">
+        <div id="<%= list["id"] %>" class="sortable container" style="width: 410px; ">
           <%= for task <- list["tasks"] do %>
 
             <div id="<%= task["id"] %>" class="box draggable" draggable="true"
@@ -90,7 +90,7 @@
           background: rgba(255, 255, 255, 0.25); display: flex; justify-content: center;
           align-content: center; flex-direction: column;"
     >
-      <span>
+      <span style="width: 410px; ">
         <a href="<%= Routes.list_path(FrontendWeb.Endpoint, :new) %>" style="color: gray;">
           <span class="icon">
             <i class="fa fa-plus" style="color: gray; font-size: 2rem;"> </i>
