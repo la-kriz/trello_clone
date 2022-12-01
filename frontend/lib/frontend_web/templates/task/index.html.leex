@@ -26,14 +26,24 @@
               </div>
 
               <td>
-                <span><%= button "Show", to: Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]), method: :get %></span>
+                <button class="button"
+                        data-method="get"
+                        data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]) %>"
+                        data-csrf="<%= @token %>"
+                        style="background-color: white; border-color: white;"
+                >
+                  <span class="icon">
+                    <i class="fa fa-eye" style="color: gray; font-size: 2rem"></i>
+                  </span>
+                </button>
                 <button class="button"
                         data-method="get"
                         data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]) %>"
                         data-csrf="<%= @token %>"
+                        style="background-color: white; border-color: white;"
                 >
                   <span class="icon">
-                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit" style="color: gray; font-size: 2rem"></i>
                   </span>
                 </button>
                 <button class="button"
@@ -41,9 +51,10 @@
                         data-method="delete"
                         data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]) %>"
                         data-csrf="<%= @token %>"
+                        style="background-color: white; border-color: white;"
                 >
                   <span class="icon">
-                    <i class="fa fa-trash"></i>
+                    <i class="fa fa-trash" style="color: gray; font-size: 2rem;"></i>
                   </span>
                 </button>
               </td>
