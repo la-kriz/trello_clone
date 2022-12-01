@@ -25,8 +25,7 @@ defmodule FrontendWeb.TaskController do
 
     {:ok, body} = response.body |> Jason.decode()
 
-    index(conn, %{})
-
+    redirect(conn, to: Routes.task_path(conn, :index))
   end
 
   def show(conn, %{"list_id" => list_id, "id" => id}) do

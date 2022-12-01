@@ -14,6 +14,7 @@ defmodule BackendWeb.TaskController do
 
   def create(conn, %{"task" => task_params}) do
     task_params = Map.put(task_params, "list_id", task_params["list_id"])
+    task_params = Map.put(task_params, "position", :os.system_time(:millisecond))
 
     with {:ok, %Task{} = task} <- Board.create_task(task_params) do
       conn
