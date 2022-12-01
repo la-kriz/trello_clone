@@ -26,10 +26,10 @@
               </div>
 
               <td>
-                <span><%= link "Show", to: Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]) %></span>
-                <span><%= link "Edit", to: Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]) %></span>
+                <span><%= button "Show", to: Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]), method: :get %></span>
+                <span><%= button "Edit", to: Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]), method: :get %></span>
                 <span>
-                  <%= link "Delete", to: Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
+                  <%= button "Delete", to: Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
                 </span>
               </td>
 
