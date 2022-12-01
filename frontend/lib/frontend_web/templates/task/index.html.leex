@@ -28,9 +28,16 @@
               <td>
                 <span><%= button "Show", to: Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]), method: :get %></span>
                 <span><%= button "Edit", to: Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]), method: :get %></span>
-                <span>
-                  <%= button "Delete", to: Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]), method: :delete, data: [confirm: "Are you sure?"] %>
-                </span>
+                <button class="button"
+                        data-confirm="Are you sure?"
+                        data-method="delete"
+                        data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]) %>"
+                        data-csrf="<%= @token %>"
+                >
+                  <span class="icon">
+                    <i class="fa fa-trash"></i>
+                  </span>
+                </button>
               </td>
 
               <br/>

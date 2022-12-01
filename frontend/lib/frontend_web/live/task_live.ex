@@ -9,7 +9,10 @@ defmodule FrontendWeb.TaskLive do
 
     data = list_body["data"]
 
-    {:ok, assign(socket, :tasks, data)}
+    socket = assign(socket, :tasks, data)
+    socket = assign(socket, token: Phoenix.Controller.get_csrf_token())
+
+    {:ok, socket}
   end
 
   def render(assigns) do
