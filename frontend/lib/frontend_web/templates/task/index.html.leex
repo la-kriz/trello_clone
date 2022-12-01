@@ -27,7 +27,15 @@
 
               <td>
                 <span><%= button "Show", to: Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]), method: :get %></span>
-                <span><%= button "Edit", to: Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]), method: :get %></span>
+                <button class="button"
+                        data-method="get"
+                        data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]) %>"
+                        data-csrf="<%= @token %>"
+                >
+                  <span class="icon">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                </button>
                 <button class="button"
                         data-confirm="Are you sure?"
                         data-method="delete"
