@@ -10,22 +10,6 @@
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <div class="columns is-vcentered is-flex-direction-column is-justify-content-flex-end">
-          <h1 class="title is-1">Phx TODO</h1>
-        </div>
-      </section>
-    </header>
-    <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <%= @inner_content %>
-      <section class="row">
-        <article class="column">
-          <h2>Made with ❤️ by kriz</h2>
-        </article>
-      </section>
-    </main>
+    <%= @inner_content %>
   </body>
 </html>
