@@ -139,7 +139,8 @@ Hooks.ReorderTask = {
         const containers = document.querySelectorAll('.sortable.container')
 
         draggables.forEach(draggable => {
-            draggable.addEventListener('dragstart', () => {
+            draggable.addEventListener('dragstart', e => {
+                e.stopPropagation()
                 draggable.classList.add('dragging')
             })
 
@@ -234,9 +235,12 @@ Hooks.ReorderList = {
 
         containers.forEach(container => {
             container.addEventListener('dragover', e => {
+                const draggable = document.querySelector('.dragging-list')
+                if (draggable == null) {
+                    return;
+                }
                 e.preventDefault()
                 const afterElement = getDragAfterListElement(container, e.clientX)
-                const draggable = document.querySelector('.dragging-list')
                 if (afterElement == null) {
                     const addAnotherListElement = document.querySelector('#add-another-list')
                     container.insertBefore(draggable, addAnotherListElement)
