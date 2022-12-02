@@ -9,7 +9,7 @@ defmodule FrontendWeb.TaskLive do
 
     data = list_body["data"]
 
-    socket = assign(socket, :tasks, data)
+    socket = assign(socket, :lists, data)
     socket = assign(socket, token: Phoenix.Controller.get_csrf_token())
 
     {:ok, socket}
@@ -103,6 +103,29 @@ defmodule FrontendWeb.TaskLive do
     body = Jason.encode! %{"task" => task_params}
 
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> current_task_id,
+                                    body, [{"Content-Type", "application/json"}]
+
+    {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
+  end
+
+  def handle_event("reorder_list", %{
+    "list_id" => list_id,
+    "before_task_position" => before_task_position,
+    "current_task_position" => current_task_position,
+    "after_task_position" => after_task_position
+  }, socket) do
+
+    before_task_position = D.new(before_task_position)
+    after_task_position = D.new(after_task_position)
+
+    new_position_param = D.div(D.add(before_task_position, after_task_position), 2)
+
+    task_params = %{"position" => D.to_string(new_position_param)}
+    body = Jason.encode! %{"list" => task_params}
+
+    IO.puts ">------------->>>>> called moving LIST at the middle, before/new/after position is " <> D.to_string(before_task_position)
+            <> ", " <> D.to_string(new_position_param) <> ", "<> D.to_string(after_task_position)
+    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
                                     body, [{"Content-Type", "application/json"}]
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
