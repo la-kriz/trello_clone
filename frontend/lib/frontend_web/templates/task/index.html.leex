@@ -1,9 +1,9 @@
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
-  <div style="border: solid; border-color: #a94442; border-width: thin; display: flex; overflow: auto">
+  <div class="sortable-list-container" style="border: solid; border-color: #a94442; border-width: thin; display: flex; overflow: auto">
 
     <%= for list <- @tasks do %>
-      <div class="card" style="width: 410px; margin-left: 10px; margin-right: 10px; ">
+      <div id="<%= list["id"] %>" class="card draggable-list" draggable="true" phx-hook="ReorderList">
 
         <div id="<%= list["id"] %>" class="definitions" phx-hook="EditListTitle">
           <h2 data-editor-shown="false" data-key="title1"><p><%= list["title"] %></p></h2>
@@ -86,7 +86,7 @@
       </div>
     <% end %>
 
-    <div class="card" style="width: 410px; height: 50px; margin-left: 10px; margin-right: 10px;
+    <div id="add-another-list" class="card" style="width: 410px; height: 50px; margin-left: 10px; margin-right: 10px;
           background: rgba(255, 255, 255, 0.25); display: flex; justify-content: center;
           align-content: center; flex-direction: column;"
     >

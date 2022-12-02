@@ -167,9 +167,12 @@ Hooks.ReorderTask = {
 
         containers.forEach(container => {
             container.addEventListener('dragover', e => {
+                const draggable = document.querySelector('.dragging')
+                if (draggable == null) {
+                    return;
+                }
                 e.preventDefault()
                 const afterElement = getDragAfterElement(container, e.clientY)
-                const draggable = document.querySelector('.dragging')
                 if (afterElement == null) {
                     container.appendChild(draggable)
                 } else {
@@ -184,6 +187,71 @@ Hooks.ReorderTask = {
             return draggableElements.reduce((closest, child) => {
                 const box = child.getBoundingClientRect()
                 const offset = y - box.top - box.height / 2
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child }
+                } else {
+                    return closest
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element
+        }
+    },
+}
+
+
+Hooks.ReorderList = {
+    mounted() {
+        const that = this;
+
+        const draggables = document.querySelectorAll('.draggable-list')
+        const containers = document.querySelectorAll('.sortable-list-container')
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', () => {
+                draggable.classList.add('dragging-list')
+            })
+
+            draggable.addEventListener('dragend', e => {
+
+                // if (draggable.classList.contains('dragging-list')) {
+                //     const container = draggable.parentElement
+                //     const beforeElement = draggable.previousElementSibling
+                //     const afterElement = draggable.nextElementSibling
+                //
+                //     that.pushEvent('reorder_task', {
+                //         list_id: container.id,
+                //         current_task_id: draggable.id,
+                //         current_task_position: draggable.dataset.position,
+                //         before_task_position: beforeElement ? beforeElement.dataset.position : null,
+                //         after_task_position: afterElement ? afterElement.dataset.position : null,
+                //     }, (reply, ref) => {
+                //         draggable.dataset.position = reply.new_position
+                //     })
+                // }
+                //
+                draggable.classList.remove('dragging-list')
+            })
+        })
+
+        containers.forEach(container => {
+            container.addEventListener('dragover', e => {
+                e.preventDefault()
+                const afterElement = getDragAfterListElement(container, e.clientX)
+                const draggable = document.querySelector('.dragging-list')
+                if (afterElement == null) {
+                    const addAnotherListElement = document.querySelector('#add-another-list')
+                    container.insertBefore(draggable, addAnotherListElement)
+                } else {
+                    container.insertBefore(draggable, afterElement)
+                }
+            })
+        })
+
+        function getDragAfterListElement(container, x) {
+            const draggableLists = [...container.querySelectorAll('.draggable-list:not(.dragging-list)')]
+
+            return draggableLists.reduce((closest, child) => {
+                const box = child.getBoundingClientRect()
+                const offset = x - box.left - box.width / 2
                 if (offset < 0 && offset > closest.offset) {
                     return { offset: offset, element: child }
                 } else {

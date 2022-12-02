@@ -25,7 +25,17 @@ body {
   cursor: move;
 }
 
+.draggable-list {
+  width: 410px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .draggable.dragging {
+  opacity: .25;
+}
+
+.draggable-list.dragging-list {
   opacity: .25;
 }
 
