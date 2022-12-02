@@ -58,7 +58,7 @@ defmodule FrontendWeb.TaskLive do
 
     new_position_param = D.add(before_task_position, D.new(50))
 
-    task_params = %{"position" => D.to_string(new_position_param)}
+    task_params = %{"position" => D.to_string(new_position_param), "list_id" => list_id}
     body = Jason.encode! %{"task" => task_params}
 
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> current_task_id,
