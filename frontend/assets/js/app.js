@@ -147,8 +147,8 @@ Hooks.ReorderTask = {
 
                 if (draggable.classList.contains('dragging')) {
                     const container = draggable.parentElement
-                    const beforeElement = getDragBeforeElement(container, e.clientY)
-                    const afterElement = getDragAfterElement(container, e.clientY)
+                    const beforeElement = draggable.previousElementSibling
+                    const afterElement = draggable.nextElementSibling
 
                     that.pushEvent('reorder_task', {
                         list_id: container.id,
@@ -177,20 +177,6 @@ Hooks.ReorderTask = {
                 }
             })
         })
-
-        function getDragBeforeElement(container, y) {
-            const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
-
-            return draggableElements.reduce((closest, child) => {
-                const box = child.getBoundingClientRect()
-                const offset = y - box.bottom - box.height / 2
-                if (offset > 0 && offset < closest.offset) {
-                    return { offset: offset, element: child }
-                } else {
-                    return closest
-                }
-            }, { offset: Number.POSITIVE_INFINITY }).element
-        }
 
         function getDragAfterElement(container, y) {
             const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
