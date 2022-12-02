@@ -110,6 +110,25 @@ defmodule FrontendWeb.TaskLive do
 
   def handle_event("reorder_list", %{
     "list_id" => list_id,
+    "current_task_position" => current_task_position,
+    "after_task_position" => after_task_position
+  }, socket) do
+
+    new_position_param = D.sub(after_task_position, D.new(50))
+
+    task_params = %{"position" => D.to_string(new_position_param)}
+    body = Jason.encode! %{"list" => task_params}
+
+    IO.puts ">------------->>>>> called moving LIST at the middle, new/after position is "
+        <> ", " <> D.to_string(new_position_param) <> ", " <> after_task_position
+    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
+                                    body, [{"Content-Type", "application/json"}]
+
+    {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
+  end
+
+  def handle_event("reorder_list", %{
+    "list_id" => list_id,
     "before_task_position" => before_task_position,
     "current_task_position" => current_task_position
   }, socket) do
