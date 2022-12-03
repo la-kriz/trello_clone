@@ -3,9 +3,23 @@
     <button class="btn-close">X</button>
   </div>
   <div id="modal-task-info">
-    <h1 id="task-title"></h1>
-    <h3 id="task-description"></h3>
-    <h3 id="task-assigned-person"></h3>
+    <h1>Edit Task</h1>
+    <form id="edit-task-form" action="" method="post">
+      <input id="edit-task-form-token" name="_csrf_token" type="hidden" value="">
+
+      <label for="task-title">Title</label>
+      <input id="task-title" name="task[title]" type="text" value="">
+
+      <label for="task-description">Description</label>
+      <input id="task-description" name="task[description]" type="text" value="">
+
+      <label for="task-assigned-person">Assigned person</label>
+      <input id="task-assigned-person" name="task[assigned_person]" type="text" value="">
+
+      <div>
+        <button type="submit">Save</button>
+      </div>
+    </form>
   </div>
 </section>
 <div class="overlay hidden"></div>
@@ -45,7 +59,7 @@
                  phx-hook="ReorderTask" data-position="<%= task["position"] %>"
                  style="border: solid; border-color: #a94442; border-width: thin; width: 390px;">
 
-              <div class="box-content">
+              <div id="current-task-info" class="box-content">
                 <h1 id="current-task-title"><%= task["title"] %></h1>
                 <h3 id="current-task-description"><%= task["description"] %></h3>
                 <h3 id="current-task-assigned-person"><%= task["assigned_person"] %></h3>

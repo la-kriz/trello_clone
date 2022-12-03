@@ -296,7 +296,8 @@ const openModal = function () {
 openModalBtn.addEventListener("click", openModal);
 anotherOpenModalBtns.forEach(editTaskBtn => {
     editTaskBtn.addEventListener("click", e => {
-        const currentTaskContent = e.target.parentElement.parentElement.previousElementSibling
+        const currentTaskContainer = e.target.parentElement.parentElement.parentElement
+        const currentTaskContent = currentTaskContainer.querySelector("#current-task-info")
         const taskTitleContent = currentTaskContent
             .querySelector("#current-task-title").textContent
         const taskDescriptionContent = currentTaskContent
@@ -306,13 +307,24 @@ anotherOpenModalBtns.forEach(editTaskBtn => {
 
         const taskTitleElement = modal.querySelector("#modal-task-info")
             .querySelector("#task-title")
-        taskTitleElement.textContent = taskTitleContent
+        taskTitleElement.setAttribute("value", taskTitleContent)
         const taskDescriptionElement = modal.querySelector("#modal-task-info")
             .querySelector("#task-description")
-        taskDescriptionElement.textContent = taskDescriptionContent
+        taskDescriptionElement.setAttribute("value", taskDescriptionContent)
         const taskAssignedPersonElement = modal.querySelector("#modal-task-info")
             .querySelector("#task-assigned-person")
-        taskAssignedPersonElement.textContent = taskAssignedPersonContent
+        taskAssignedPersonElement.setAttribute("value", taskAssignedPersonContent)
+
+        const editTaskForm = document.querySelector("#edit-task-form")
+
+        const listId = currentTaskContainer.parentElement.id
+        const taskId = currentTaskContainer.id
+        const editTaskRoute = "lists/" + listId + "/tasks/" + taskId
+
+        editTaskForm.setAttribute("action", editTaskRoute)
+
+        document.querySelector("#edit-task-form-token").setAttribute("value", csrfToken)
+
         openModal()
     });
 })
