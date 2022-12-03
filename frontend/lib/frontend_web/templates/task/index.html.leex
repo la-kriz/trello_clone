@@ -1,3 +1,15 @@
+<section class="modal hidden">
+  <div class="flex">
+    <button class="btn-close">X</button>
+  </div>
+  <div id="modal-task-info">
+    <h1 id="task-title"></h1>
+    <h3 id="task-description"></h3>
+    <h3 id="task-assigned-person"></h3>
+  </div>
+</section>
+<div class="overlay hidden"></div>
+<button class="btn btn-open">Open Modal</button>
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
   <div class="sortable-list-container" style="border: solid; border-color: #a94442; border-width: thin; display: flex; overflow: auto">
@@ -34,24 +46,13 @@
                  style="border: solid; border-color: #a94442; border-width: thin; width: 390px;">
 
               <div class="box-content">
-                <h1><%= task["title"] %></h1>
-                <h3><%= task["description"] %></h3>
-                <h3><%= task["assigned_person"] %></h3>
+                <h1 id="current-task-title"><%= task["title"] %></h1>
+                <h3 id="current-task-description"><%= task["description"] %></h3>
+                <h3 id="current-task-assigned-person"><%= task["assigned_person"] %></h3>
               </div>
 
-              <button class="button"
-                      data-method="get"
-                      data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :show, list["id"], task["id"]) %>"
-                      data-csrf="<%= @token %>"
-                      style="background-color: white; border-color: white;"
-              >
-                <span class="icon">
-                  <i class="fa fa-eye" style="color: gray; font-size: 2rem"></i>
-                </span>
-              </button>
-              <button class="button"
-                      data-method="get"
-                      data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :edit, list["id"], task["id"]) %>"
+              <button id="edit-task-btn"
+                      class="button"
                       data-csrf="<%= @token %>"
                       style="background-color: white; border-color: white;"
               >

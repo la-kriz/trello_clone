@@ -279,3 +279,53 @@ liveSocket.connect()
 // Call disableLatencySim() to disable:
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const openModalBtn = document.querySelector(".btn-open");
+const anotherOpenModalBtns = document.querySelectorAll("#edit-task-btn");
+const closeModalBtn = document.querySelector(".btn-close");
+
+const openModal = function () {
+
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+};
+
+openModalBtn.addEventListener("click", openModal);
+anotherOpenModalBtns.forEach(editTaskBtn => {
+    editTaskBtn.addEventListener("click", e => {
+        const currentTaskContent = e.target.parentElement.parentElement.previousElementSibling
+        const taskTitleContent = currentTaskContent
+            .querySelector("#current-task-title").textContent
+        const taskDescriptionContent = currentTaskContent
+            .querySelector("#current-task-description").textContent
+        const taskAssignedPersonContent = currentTaskContent
+            .querySelector("#current-task-assigned-person").textContent
+
+        const taskTitleElement = modal.querySelector("#modal-task-info")
+            .querySelector("#task-title")
+        taskTitleElement.textContent = taskTitleContent
+        const taskDescriptionElement = modal.querySelector("#modal-task-info")
+            .querySelector("#task-description")
+        taskDescriptionElement.textContent = taskDescriptionContent
+        const taskAssignedPersonElement = modal.querySelector("#modal-task-info")
+            .querySelector("#task-assigned-person")
+        taskAssignedPersonElement.textContent = taskAssignedPersonContent
+        openModal()
+    });
+})
+
+const closeModal = function () {
+    modal.classList.add("hidden");
+    overlay.classList.add("hidden");
+};
+
+closeModalBtn.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        closeModal();
+    }
+});
