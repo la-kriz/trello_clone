@@ -296,7 +296,9 @@ const openModal = function () {
 openModalBtn.addEventListener("click", openModal);
 anotherOpenModalBtns.forEach(editTaskBtn => {
     editTaskBtn.addEventListener("click", e => {
-        const currentTaskContainer = e.target.parentElement.parentElement.parentElement
+        const currentTaskContainer = (e.target.id === "edit-task-btn")
+            ? e.target.parentElement
+            : e.target.closest("button#edit-task-btn").parentElement
         const currentTaskContent = currentTaskContainer.querySelector("#current-task-info")
         const taskTitleContent = currentTaskContent
             .querySelector("#current-task-title").textContent
