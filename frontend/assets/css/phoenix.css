@@ -14,7 +14,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 0.4rem;
-  width: 450px;
+  width: 50%;
+  margin: 0 auto;
   padding: 1.3rem;
   min-height: 250px;
   position: fixed;
@@ -62,12 +63,41 @@ button {
 }
 
 .btn-close {
-  height: 50px;
-  width: 50px;
-  /*transform: translate(10px, -20px);*/
-  /*padding: 0.5rem 0.7rem;*/
-  /*background: #eee;*/
   border-radius: 50%;
+  padding: 0.5em;
+  width: 30px;
+  height: 30px;
+  border: 2px solid blue;
+  color: blue;
+  position: relative;
+}
+.btn-close:hover {
+  border: 2px solid blue;
+  background-color: yellow;
+  color: #ffffff;
+}
+
+.btn-close::before {
+  content: " ";
+  position: absolute;
+  display: block;
+  background-color: blue;
+  width: 2px;
+  left: 12px;
+  top: 5px;
+  bottom: 5px;
+  transform: rotate(45deg);
+}
+.btn-close::after {
+  content: " ";
+  position: absolute;
+  display: block;
+  background-color: blue;
+  height: 2px;
+  top:12px;
+  left: 5px;
+  right: 5px;
+  transform: rotate(45deg);
 }
 
 .overlay {
