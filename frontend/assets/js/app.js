@@ -283,7 +283,6 @@ window.liveSocket = liveSocket
 
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
-const openModalBtn = document.querySelector(".btn-open");
 const anotherOpenModalBtns = document.querySelectorAll("#edit-task-btn");
 const closeModalBtn = document.querySelector(".btn-close");
 
@@ -293,7 +292,6 @@ const openModal = function () {
     overlay.classList.remove("hidden");
 };
 
-openModalBtn.addEventListener("click", openModal);
 anotherOpenModalBtns.forEach(editTaskBtn => {
     editTaskBtn.addEventListener("click", e => {
         const currentTaskContainer = (e.target.id === "edit-task-btn")
