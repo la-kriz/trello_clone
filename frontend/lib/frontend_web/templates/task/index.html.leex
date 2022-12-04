@@ -24,7 +24,9 @@
   <div>
     <form id="comment-form" action="#" phx-submit="send_comment" data-taskid="">
 
-      <h3>Comments</h3>
+      <label for="all-comments-of-task">Comments</label>
+      <div id="all-comments-of-task"></div>
+
       <input name="comment_content" type="text">
       <input id="task-id-for-comment" name="task_id" type="hidden">
 

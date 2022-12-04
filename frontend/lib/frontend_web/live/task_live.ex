@@ -43,6 +43,20 @@ defmodule FrontendWeb.TaskLive do
     {:noreply, socket}
   end
 
+  def handle_event("fetch_comments_of_task", %{"task_id" => task_id}, socket) do
+
+    IO.puts "called fetch_comments_of_task w/ " <> task_id
+
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/comments?task_id=" <> task_id
+    {:ok, body} = response.body |> Jason.decode()
+
+    data = Enum.map(body["data"], &(&1["content"]))
+
+    IO.puts data
+
+    {:reply, %{"comments" => data}, socket}
+  end
+
   def handle_event("reorder_task", %{
     "list_id" => list_id,
     "current_task_id" => current_task_id,
