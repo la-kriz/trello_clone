@@ -21,6 +21,13 @@ defmodule Backend.Tasks do
     Repo.all(Comment)
   end
 
+  def list_comments(%{task_id: task_id}) do
+    comments = from comment in Comment,
+      where: comment.task_id == ^task_id,
+      order_by: comment.inserted_at
+    Repo.all(comments)
+  end
+
   @doc """
   Gets a single comment.
 

@@ -6,6 +6,11 @@ defmodule BackendWeb.CommentController do
 
   action_fallback BackendWeb.FallbackController
 
+  def index(conn, %{"task_id" => task_id}) do
+    comments = Tasks.list_comments(%{task_id: task_id})
+    render(conn, "index.json", comments: comments)
+  end
+
   def index(conn, _params) do
     comments = Tasks.list_comments()
     render(conn, "index.json", comments: comments)

@@ -76,7 +76,7 @@
                 <h3 id="current-task-assigned-person"><%= task["assigned_person"] %></h3>
               </div>
 
-              <button id="edit-task-btn"
+              <button id="edit-task-btn-<%= task["id"] %>"
                       phx-hook="EditTask"
                       class="button"
                       data-csrf="<%= @token %>"

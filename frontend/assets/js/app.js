@@ -270,7 +270,6 @@ Hooks.EditTask = {
         const that = this;
         const modal = document.querySelector(".modal");
         const overlay = document.querySelector(".overlay");
-        const anotherOpenModalBtns = document.querySelectorAll("#edit-task-btn");
         const closeModalBtn = document.querySelector(".btn-close");
 
         const openModal = function () {
@@ -279,56 +278,60 @@ Hooks.EditTask = {
             overlay.classList.remove("hidden");
         };
 
-        anotherOpenModalBtns.forEach(editTaskBtn => {
-            editTaskBtn.addEventListener("click", e => {
-                const currentTaskContainer = (e.target.id === "edit-task-btn")
-                    ? e.target.parentElement
-                    : e.target.closest("button#edit-task-btn").parentElement
-                const currentTaskContent = currentTaskContainer.querySelector("#current-task-info")
-                const taskTitleContent = currentTaskContent
-                    .querySelector("#current-task-title").textContent
-                const taskDescriptionContent = currentTaskContent
-                    .querySelector("#current-task-description").textContent
-                const taskAssignedPersonContent = currentTaskContent
-                    .querySelector("#current-task-assigned-person").textContent
+        const handleClickEvent = function(e) {
+            const commentsListElement = document.querySelector("#all-comments-of-task")
+            commentsListElement.innerHTML = ''
 
-                const taskTitleElement = modal.querySelector("#modal-task-info")
-                    .querySelector("#task-title")
-                taskTitleElement.setAttribute("value", taskTitleContent)
-                const taskDescriptionElement = modal.querySelector("#modal-task-info")
-                    .querySelector("#task-description")
-                taskDescriptionElement.setAttribute("value", taskDescriptionContent)
-                const taskAssignedPersonElement = modal.querySelector("#modal-task-info")
-                    .querySelector("#task-assigned-person")
-                taskAssignedPersonElement.setAttribute("value", taskAssignedPersonContent)
+            const currentTaskContainer = (e.target.id.startsWith("edit-task-btn-"))
+                ? e.target.parentElement
+                : e.target.closest(`button[id^="edit-task-btn-"]`).parentElement
+            const currentTaskContent = currentTaskContainer.querySelector("#current-task-info")
+            const taskTitleContent = currentTaskContent
+                .querySelector("#current-task-title").textContent
+            const taskDescriptionContent = currentTaskContent
+                .querySelector("#current-task-description").textContent
+            const taskAssignedPersonContent = currentTaskContent
+                .querySelector("#current-task-assigned-person").textContent
 
-                const editTaskForm = document.querySelector("#edit-task-form")
+            const taskTitleElement = modal.querySelector("#modal-task-info")
+                .querySelector("#task-title")
+            taskTitleElement.setAttribute("value", taskTitleContent)
+            const taskDescriptionElement = modal.querySelector("#modal-task-info")
+                .querySelector("#task-description")
+            taskDescriptionElement.setAttribute("value", taskDescriptionContent)
+            const taskAssignedPersonElement = modal.querySelector("#modal-task-info")
+                .querySelector("#task-assigned-person")
+            taskAssignedPersonElement.setAttribute("value", taskAssignedPersonContent)
 
-                const listId = currentTaskContainer.parentElement.id
-                const taskId = currentTaskContainer.id
-                const editTaskRoute = "lists/" + listId + "/tasks/" + taskId
+            const editTaskForm = document.querySelector("#edit-task-form")
 
-                editTaskForm.setAttribute("action", editTaskRoute)
+            const listId = currentTaskContainer.parentElement.id
+            const taskId = currentTaskContainer.id
+            const editTaskRoute = "lists/" + listId + "/tasks/" + taskId
 
-                document.querySelector("#edit-task-form-token").setAttribute("value", csrfToken)
+            editTaskForm.setAttribute("action", editTaskRoute)
 
-                that.pushEvent('fetch_comments_of_task', {
-                    task_id: taskId,
-                }, (reply, ref) => {
-                    const commentsListElement = document.querySelector("#all-comments-of-task")
+            document.querySelector("#edit-task-form-token").setAttribute("value", csrfToken)
 
-                    reply.comments.forEach(comment => {
-                        const h3 = document.createElement("h3");
-                        h3.textContent = comment
-                        commentsListElement.appendChild(h3)
-                    })
+            that.pushEvent('fetch_comments_of_task', {
+                task_id: taskId,
+            }, (reply, ref) => {
+                const commentsListElement = document.querySelector("#all-comments-of-task")
+                commentsListElement.innerHTML = ''
+
+                reply.comments.forEach(comment => {
+                    const h3 = document.createElement("h3");
+                    h3.textContent = comment
+                    commentsListElement.appendChild(h3)
                 })
+            })
 
-                document.querySelector("#task-id-for-comment").setAttribute("value", taskId)
+            document.querySelector("#task-id-for-comment").setAttribute("value", taskId)
 
-                openModal()
-            });
-        })
+            openModal()
+        };
+
+        that.el.addEventListener("click", handleClickEvent, false);
 
         const closeModal = function () {
             modal.classList.add("hidden");
