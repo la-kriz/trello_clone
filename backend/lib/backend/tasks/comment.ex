@@ -15,8 +15,8 @@ defmodule Backend.Tasks.Comment do
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:content])
-    |> validate_required([:content])
+    |> cast(attrs, [:content, :task_id])
+    |> validate_required([:content, :task_id])
     |> assoc_constraint(:task)
   end
 end

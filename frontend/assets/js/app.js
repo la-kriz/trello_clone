@@ -325,6 +325,8 @@ anotherOpenModalBtns.forEach(editTaskBtn => {
 
         document.querySelector("#edit-task-form-token").setAttribute("value", csrfToken)
 
+        document.querySelector("#task-id-for-comment").setAttribute("value", taskId)
+
         openModal()
     });
 })

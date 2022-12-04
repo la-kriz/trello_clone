@@ -21,6 +21,16 @@
       </div>
     </form>
   </div>
+  <div>
+    <form id="comment-form" action="#" phx-submit="send_comment" data-taskid="">
+
+      <h3>Comments</h3>
+      <input name="comment_content" type="text">
+      <input id="task-id-for-comment" name="task_id" type="hidden">
+
+      <button type="submit">Send comment</button>
+    </form>
+  </div>
 </section>
 <div class="overlay hidden"></div>
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">

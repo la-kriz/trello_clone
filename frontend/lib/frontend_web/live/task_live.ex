@@ -20,13 +20,27 @@ defmodule FrontendWeb.TaskLive do
   end
 
   def handle_event("edit_list_title", %{"list_id" => list_id, "new_title" => new_title_param}, socket) do
-      list_params = %{"title" => new_title_param}
-      body = Jason.encode! %{"list" => list_params}
+    list_params = %{"title" => new_title_param}
+    body = Jason.encode! %{"list" => list_params}
 
-      {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
-                                      body, [{"Content-Type", "application/json"}]
+    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
+                                    body, [{"Content-Type", "application/json"}]
 
-      {:noreply, socket}
+    {:noreply, socket}
+  end
+
+  def handle_event("send_comment", %{"comment_content" => comment_content, "task_id" => task_id}, socket) do
+
+    IO.puts "called send_comment w/ " <> comment_content <> " and task id of " <> task_id
+
+    comment_params = %{"content" => comment_content, "task_id" => task_id}
+    body = Jason.encode! %{"comment" => comment_params}
+
+    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/comments", body, [{"Content-Type", "application/json"}]
+
+    {:ok, body} = response.body |> Jason.decode()
+
+    {:noreply, socket}
   end
 
   def handle_event("reorder_task", %{
