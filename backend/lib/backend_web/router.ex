@@ -26,6 +26,8 @@ defmodule BackendWeb.Router do
       resources "/tasks", TaskController, except: [:new, :edit, :delete]
     end
 
+    resources "/comments", CommentController, except: [:new, :edit]
+
     delete "/tasks/:id", TaskController, :delete
 
     get("/ping", PingController, :show)
