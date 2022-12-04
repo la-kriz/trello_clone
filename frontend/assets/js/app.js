@@ -265,6 +265,78 @@ Hooks.ReorderList = {
 }
 
 
+Hooks.EditTask = {
+    mounted() {
+        const that = this;
+        const modal = document.querySelector(".modal");
+        const overlay = document.querySelector(".overlay");
+        const anotherOpenModalBtns = document.querySelectorAll("#edit-task-btn");
+        const closeModalBtn = document.querySelector(".btn-close");
+
+        const openModal = function () {
+
+            modal.classList.remove("hidden");
+            overlay.classList.remove("hidden");
+        };
+
+        anotherOpenModalBtns.forEach(editTaskBtn => {
+            editTaskBtn.addEventListener("click", e => {
+                const currentTaskContainer = (e.target.id === "edit-task-btn")
+                    ? e.target.parentElement
+                    : e.target.closest("button#edit-task-btn").parentElement
+                const currentTaskContent = currentTaskContainer.querySelector("#current-task-info")
+                const taskTitleContent = currentTaskContent
+                    .querySelector("#current-task-title").textContent
+                const taskDescriptionContent = currentTaskContent
+                    .querySelector("#current-task-description").textContent
+                const taskAssignedPersonContent = currentTaskContent
+                    .querySelector("#current-task-assigned-person").textContent
+
+                const taskTitleElement = modal.querySelector("#modal-task-info")
+                    .querySelector("#task-title")
+                taskTitleElement.setAttribute("value", taskTitleContent)
+                const taskDescriptionElement = modal.querySelector("#modal-task-info")
+                    .querySelector("#task-description")
+                taskDescriptionElement.setAttribute("value", taskDescriptionContent)
+                const taskAssignedPersonElement = modal.querySelector("#modal-task-info")
+                    .querySelector("#task-assigned-person")
+                taskAssignedPersonElement.setAttribute("value", taskAssignedPersonContent)
+
+                const editTaskForm = document.querySelector("#edit-task-form")
+
+                const listId = currentTaskContainer.parentElement.id
+                const taskId = currentTaskContainer.id
+                const editTaskRoute = "lists/" + listId + "/tasks/" + taskId
+
+                editTaskForm.setAttribute("action", editTaskRoute)
+
+                document.querySelector("#edit-task-form-token").setAttribute("value", csrfToken)
+
+
+
+                document.querySelector("#task-id-for-comment").setAttribute("value", taskId)
+
+                openModal()
+            });
+        })
+
+        const closeModal = function () {
+            modal.classList.add("hidden");
+            overlay.classList.add("hidden");
+        };
+
+        closeModalBtn.addEventListener("click", closeModal);
+        overlay.addEventListener("click", closeModal);
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+                closeModal();
+            }
+        });
+    },
+}
+
+
+
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: Hooks})
@@ -279,67 +351,3 @@ liveSocket.connect()
 // Call disableLatencySim() to disable:
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
-
-
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const anotherOpenModalBtns = document.querySelectorAll("#edit-task-btn");
-const closeModalBtn = document.querySelector(".btn-close");
-
-const openModal = function () {
-
-    modal.classList.remove("hidden");
-    overlay.classList.remove("hidden");
-};
-
-anotherOpenModalBtns.forEach(editTaskBtn => {
-    editTaskBtn.addEventListener("click", e => {
-        const currentTaskContainer = (e.target.id === "edit-task-btn")
-            ? e.target.parentElement
-            : e.target.closest("button#edit-task-btn").parentElement
-        const currentTaskContent = currentTaskContainer.querySelector("#current-task-info")
-        const taskTitleContent = currentTaskContent
-            .querySelector("#current-task-title").textContent
-        const taskDescriptionContent = currentTaskContent
-            .querySelector("#current-task-description").textContent
-        const taskAssignedPersonContent = currentTaskContent
-            .querySelector("#current-task-assigned-person").textContent
-
-        const taskTitleElement = modal.querySelector("#modal-task-info")
-            .querySelector("#task-title")
-        taskTitleElement.setAttribute("value", taskTitleContent)
-        const taskDescriptionElement = modal.querySelector("#modal-task-info")
-            .querySelector("#task-description")
-        taskDescriptionElement.setAttribute("value", taskDescriptionContent)
-        const taskAssignedPersonElement = modal.querySelector("#modal-task-info")
-            .querySelector("#task-assigned-person")
-        taskAssignedPersonElement.setAttribute("value", taskAssignedPersonContent)
-
-        const editTaskForm = document.querySelector("#edit-task-form")
-
-        const listId = currentTaskContainer.parentElement.id
-        const taskId = currentTaskContainer.id
-        const editTaskRoute = "lists/" + listId + "/tasks/" + taskId
-
-        editTaskForm.setAttribute("action", editTaskRoute)
-
-        document.querySelector("#edit-task-form-token").setAttribute("value", csrfToken)
-
-        document.querySelector("#task-id-for-comment").setAttribute("value", taskId)
-
-        openModal()
-    });
-})
-
-const closeModal = function () {
-    modal.classList.add("hidden");
-    overlay.classList.add("hidden");
-};
-
-closeModalBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
-document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-        closeModal();
-    }
-});
