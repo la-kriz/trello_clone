@@ -281,6 +281,8 @@ Hooks.EditTask = {
         const handleClickEvent = function(e) {
             const commentsListElement = document.querySelector("#all-comments-of-task")
             commentsListElement.innerHTML = ''
+            document.querySelector("#input-field-for-comment").value = ""
+
 
             const currentTaskContainer = (e.target.id.startsWith("edit-task-btn-"))
                 ? e.target.parentElement
@@ -348,6 +350,29 @@ Hooks.EditTask = {
     },
 }
 
+Hooks.ClearInputAndAppendNewComment = {
+    mounted() {
+        const that = this;
+
+        const handleClickEvent = function(e) {
+            document.getElementById("comment-form").dispatchEvent(
+                new Event("submit", {bubbles: true})
+            )
+            window.history.pushState({}, document.title, "/");
+
+            const inputField = document.querySelector("#input-field-for-comment")
+            const newComment = inputField.value
+            inputField.value = ""
+
+            const commentsContainer = document.querySelector("#all-comments-of-task")
+            const h3 = document.createElement("h3");
+            h3.textContent = newComment
+            commentsContainer.appendChild(h3)
+        }
+
+        that.el.addEventListener("click", handleClickEvent, false);
+    },
+}
 
 
 

@@ -27,10 +27,10 @@
       <label for="all-comments-of-task">Comments</label>
       <div id="all-comments-of-task"></div>
 
-      <input name="comment_content" type="text">
+      <input id="input-field-for-comment" name="comment_content" type="text">
       <input id="task-id-for-comment" name="task_id" type="hidden">
 
-      <button type="submit">Send comment</button>
+      <button id="send-comment-btn" type="submit" phx-hook="ClearInputAndAppendNewComment">Send comment</button>
     </form>
   </div>
 </section>
