@@ -6,8 +6,8 @@ defmodule Backend.TasksTest do
   describe "comments" do
     alias Backend.Tasks.Comment
 
-    @valid_attrs %{content: "some content"}
-    @update_attrs %{content: "some updated content"}
+    @valid_attrs %{content: "some content", task_id: 2}
+    @update_attrs %{content: "some updated content", task_id: 2}
     @invalid_attrs %{content: nil}
 
     def comment_fixture(attrs \\ %{}) do
@@ -21,7 +21,7 @@ defmodule Backend.TasksTest do
 
     test "list_comments/0 returns all comments" do
       comment = comment_fixture()
-      assert Tasks.list_comments() == [comment]
+      assert Enum.member? Tasks.list_comments(), comment
     end
 
     test "get_comment!/1 returns the comment with given id" do
