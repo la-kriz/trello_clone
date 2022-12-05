@@ -6,8 +6,8 @@ defmodule Backend.BoardTest do
   describe "tasks" do
     alias Backend.Board.Task
 
-    @valid_attrs %{assigned_person: "some assigned_person", description: "some description", title: "some title"}
-    @update_attrs %{assigned_person: "some updated assigned_person", description: "some updated description", title: "some updated title"}
+    @valid_attrs %{assigned_person: "some assigned_person", description: "some description", title: "some title", list_id: 1, position: 1000.0}
+    @update_attrs %{assigned_person: "some updated assigned_person", description: "some updated description", title: "some updated title", list_id: 1, position: 1000.0}
     @invalid_attrs %{assigned_person: nil, description: nil, title: nil}
 
     def task_fixture(attrs \\ %{}) do
@@ -21,7 +21,7 @@ defmodule Backend.BoardTest do
 
     test "list_tasks/0 returns all tasks" do
       task = task_fixture()
-      assert Board.list_tasks() == [task]
+      assert Enum.member? Board.list_tasks(), task
     end
 
     test "get_task!/1 returns the task with given id" do
