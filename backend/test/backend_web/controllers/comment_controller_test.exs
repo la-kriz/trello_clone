@@ -5,10 +5,12 @@ defmodule BackendWeb.CommentControllerTest do
   alias Backend.Tasks.Comment
 
   @create_attrs %{
-    content: "some content"
+    content: "some content",
+    task_id: 2
   }
   @update_attrs %{
-    content: "some updated content"
+    content: "some updated content",
+    task_id: 2
   }
   @invalid_attrs %{content: nil}
 
@@ -24,7 +26,7 @@ defmodule BackendWeb.CommentControllerTest do
   describe "index" do
     test "lists all comments", %{conn: conn} do
       conn = get(conn, Routes.comment_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      assert json_response(conn, 200)["data"] != []
     end
   end
 
