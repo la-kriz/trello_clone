@@ -18,4 +18,19 @@ defmodule FrontendWeb.SessionController do
     redirect(conn, to: Routes.task_path(conn, :index))
   end
 
+  def get_login(conn, _params) do
+    changeset = Accounts.change_user(%User{})
+    render(conn, "login.html", changeset: changeset)
+  end
+
+  def login(conn, %{"user" => user_params}) do
+    body = Jason.encode! %{"email" => user_params["email"], "password" => user_params["password"]}
+
+    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/session/new",
+                                     body, [{"Content-Type", "application/json"}]
+
+    IO.inspect(response)
+    redirect(conn, to: Routes.task_path(conn, :index))
+  end
+
 end

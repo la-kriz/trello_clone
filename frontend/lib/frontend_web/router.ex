@@ -20,6 +20,9 @@ defmodule FrontendWeb.Router do
     get "/register", SessionController, :new
     post "/register", SessionController, :register
 
+    get "/login", SessionController, :get_login
+    post "/login", SessionController, :login
+
     live "/", TaskLive
     get "/lists/new", ListController, :new
     delete "/lists/:list_id/", ListController, :delete
