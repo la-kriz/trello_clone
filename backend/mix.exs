@@ -47,7 +47,8 @@ defmodule Backend.MixProject do
       {:cors_plug, "~> 3.0"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:httpoison, "~> 1.8"}
+      {:httpoison, "~> 1.8"},
+      {:bcrypt_elixir, "~> 2.0"}
     ]
   end
 
