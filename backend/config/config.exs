@@ -21,6 +21,10 @@ config :backend, BackendWeb.Endpoint,
   pubsub_server: Backend.PubSub,
   live_view: [signing_salt: "ayViUXcF"]
 
+config :backend, Backend.Guardian,
+  issuer: "backend",
+  secret_key: "lXnlcYpB3NJKOdu/9A1sojKF3EhoK4fJySijh5Rkyq9Au13L42hP5xWQtYISUzAv"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
