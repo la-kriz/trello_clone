@@ -13,6 +13,10 @@ defmodule BackendWeb.Router do
     plug :accepts, ["json","html"]
   end
 
+  pipeline :auth do
+    plug Backend.Guardian.AuthPipeline
+  end
+
   scope "/", BackendWeb do
     pipe_through :browser
 
@@ -23,6 +27,8 @@ defmodule BackendWeb.Router do
     pipe_through :api
 
     post "/users", UserController, :register
+
+    post "/session/new", SessionController, :new
 
     resources "/lists", ListController, except: [:edit] do
       resources "/tasks", TaskController, except: [:new, :edit, :delete]
@@ -35,6 +41,13 @@ defmodule BackendWeb.Router do
     get("/ping", PingController, :show)
   end
 
+  scope "/api", BackendWeb do
+    pipe_through [:api, :auth]
+
+    post "/session/refresh", SessionController, :refresh
+    post "/session/delete", SessionController, :delete
+
+  end
   # Other scopes may use custom stacks.
   # scope "/api", BackendWeb do
   #   pipe_through :api
