@@ -1,0 +1,5 @@
+<h1>Registration Page</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.session_path(@conn, :register)) %>
+
+<span><%= link "Back", to: Routes.task_path(@conn, :index) %></span>
