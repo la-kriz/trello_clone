@@ -12,7 +12,7 @@ defmodule FrontendWeb.SessionController do
   def register(conn, %{"user" => user_params}) do
     body = Jason.encode! %{"user" => user_params}
 
-    {:ok, _response} = HTTPoison.post "http://host.docker.internal:4001/api/users",
+    {:ok, _response} = HTTPoison.post "http://host.docker.internal:4001/api/users/register",
                                      body, [{"Content-Type", "application/json"}]
 
     redirect(conn, to: Routes.task_path(conn, :index))
