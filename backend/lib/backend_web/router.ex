@@ -22,6 +22,8 @@ defmodule BackendWeb.Router do
   scope "/api", BackendWeb do
     pipe_through :api
 
+    post "/users", UserController, :register
+
     resources "/lists", ListController, except: [:edit] do
       resources "/tasks", TaskController, except: [:new, :edit, :delete]
     end
