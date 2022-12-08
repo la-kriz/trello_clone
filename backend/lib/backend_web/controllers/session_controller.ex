@@ -10,10 +10,10 @@ defmodule BackendWeb.SessionController do
     case Accounts.authenticate_user(email, password) do
       {:ok, user} ->
         {:ok, access_token, _claims} =
-          Guardian.encode_and_sign(user, %{}, token_type: "access", ttl: {15, :minute})
+          Guardian.encode_and_sign(user, %{username: user.username}, token_type: "access", ttl: {15, :minute})
 
         {:ok, refresh_token, _claims} =
-          Guardian.encode_and_sign(user, %{}, token_type: "refresh", ttl: {7, :day})
+          Guardian.encode_and_sign(user, %{username: user.username}, token_type: "refresh", ttl: {7, :day})
 
         conn
         |> put_resp_cookie("ruid", refresh_token)
