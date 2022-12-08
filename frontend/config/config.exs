@@ -21,6 +21,10 @@ config :frontend, FrontendWeb.Endpoint,
   pubsub_server: Frontend.PubSub,
   live_view: [signing_salt: "XU/UxE0D"]
 
+config :backend, Frontend.Guardian,
+       issuer: "backend",
+       secret_key: "lXnlcYpB3NJKOdu/9A1sojKF3EhoK4fJySijh5Rkyq9Au13L42hP5xWQtYISUzAv"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

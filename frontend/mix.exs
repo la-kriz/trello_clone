@@ -48,7 +48,8 @@ defmodule Frontend.MixProject do
       {:httpoison, "~> 1.4"},
       {:base64url, "~> 1.0"},
       {:cors_plug, "~> 3.0"},
-      {:decimal, "~> 2.0"}
+      {:decimal, "~> 2.0"},
+      {:guardian, "~> 2.0"}
     ]
   end
 
