@@ -39,6 +39,8 @@ defmodule FrontendWeb.SessionController do
     username = payload["username"]
     IO.inspect(username, label: ">>>>>> payload username is ")
 
+    conn = put_session(conn, :username, username)
+
     redirect(conn, to: Routes.task_path(conn, :index))
   end
 
