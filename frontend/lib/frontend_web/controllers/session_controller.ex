@@ -3,6 +3,7 @@ defmodule FrontendWeb.SessionController do
 
   alias Frontend.Api.Accounts
   alias Frontend.Api.Accounts.User
+  alias Frontend.Guardian, as: TokenImpl
 
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
@@ -29,7 +30,15 @@ defmodule FrontendWeb.SessionController do
     {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/session/new",
                                      body, [{"Content-Type", "application/json"}]
 
-    IO.inspect(response)
+    {:ok, body} = response.body |> Jason.decode()
+
+    access_token = body["access_token"]
+    assign(conn, :access_token, access_token)
+
+    {:ok, payload} = TokenImpl.decode_and_verify(access_token)
+    username = payload["username"]
+    IO.inspect(username, label: ">>>>>> payload username is ")
+
     redirect(conn, to: Routes.task_path(conn, :index))
   end
 
