@@ -33,13 +33,13 @@ defmodule FrontendWeb.SessionController do
     {:ok, body} = response.body |> Jason.decode()
 
     access_token = body["access_token"]
-    assign(conn, :access_token, access_token)
 
     {:ok, payload} = TokenImpl.decode_and_verify(access_token)
     username = payload["username"]
     IO.inspect(username, label: ">>>>>> payload username is ")
 
     conn = put_session(conn, :username, username)
+    conn = put_session(conn, :access_token, access_token)
 
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
