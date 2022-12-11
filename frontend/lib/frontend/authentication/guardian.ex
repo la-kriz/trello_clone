@@ -1,5 +1,5 @@
 defmodule Frontend.Guardian do
-  use Guardian, otp_app: :backend
+  use Guardian, otp_app: :frontend
   alias Frontend.Api.Accounts
 
   def subject_for_token(%{username: username}, _claims) do
