@@ -1,6 +1,8 @@
 defmodule FrontendWeb.Router do
   use FrontendWeb, :router
 
+  import FrontendWeb.Plugs.RedirectUnauthenticated
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -15,6 +17,12 @@ defmodule FrontendWeb.Router do
   end
 
   scope "/", FrontendWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live "/", TaskLive
+  end
+
+  scope "/", FrontendWeb do
     pipe_through :browser
 
     get "/register", SessionController, :new
@@ -23,7 +31,6 @@ defmodule FrontendWeb.Router do
     get "/login", SessionController, :get_login
     post "/login", SessionController, :login
 
-    live "/", TaskLive
     get "/lists/new", ListController, :new
     delete "/lists/:list_id/", ListController, :delete
 
