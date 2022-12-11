@@ -21,9 +21,13 @@ config :frontend, FrontendWeb.Endpoint,
   pubsub_server: Frontend.PubSub,
   live_view: [signing_salt: "XU/UxE0D"]
 
-config :backend, Frontend.Guardian,
+config :frontend, Frontend.Guardian,
        issuer: "backend",
        secret_key: "lXnlcYpB3NJKOdu/9A1sojKF3EhoK4fJySijh5Rkyq9Au13L42hP5xWQtYISUzAv"
+
+config :frontend, Frontend.Guardian.AuthPipeline,
+       module: Frontend.Guardian,
+       error_handler: Frontend.Guardian.AuthErrorHandler
 
 # Configures Elixir's Logger
 config :logger, :console,
