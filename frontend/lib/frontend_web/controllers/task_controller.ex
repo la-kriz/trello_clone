@@ -25,7 +25,7 @@ defmodule FrontendWeb.TaskController do
 
     {:ok, body} = response.body |> Jason.decode()
 
-    redirect(conn, to: Routes.task_path(conn, :index))
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
 
   def show(conn, %{"list_id" => list_id, "id" => id}) do
@@ -51,13 +51,13 @@ defmodule FrontendWeb.TaskController do
 
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id, body, [{"Content-Type", "application/json"}]
 
-    redirect(conn, to: Routes.task_path(conn, :index))
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
 
   def delete(conn, %{"id" => id}) do
     {:ok, response} = HTTPoison.delete "http://host.docker.internal:4001/api/tasks/" <> id
 
-    redirect(conn, to: Routes.task_path(conn, :index))
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
 
 end

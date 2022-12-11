@@ -16,7 +16,7 @@ defmodule FrontendWeb.SessionController do
     {:ok, _response} = HTTPoison.post "http://host.docker.internal:4001/api/users/register",
                                      body, [{"Content-Type", "application/json"}]
 
-    redirect(conn, to: Routes.task_path(conn, :index))
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
 
   def get_login(conn, _params) do
