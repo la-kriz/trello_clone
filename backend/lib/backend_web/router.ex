@@ -30,7 +30,7 @@ defmodule BackendWeb.Router do
 
     post "/session/new", SessionController, :new
 
-    resources "/lists", ListController, except: [:edit] do
+    resources "/lists", ListController, except: [:edit, :index] do
       resources "/tasks", TaskController, except: [:new, :edit, :delete]
     end
 
@@ -44,6 +44,7 @@ defmodule BackendWeb.Router do
   scope "/api", BackendWeb do
     pipe_through [:api, :auth]
 
+    get "/lists", ListController, :index
     post "/session/refresh", SessionController, :refresh
     post "/session/delete", SessionController, :delete
 
