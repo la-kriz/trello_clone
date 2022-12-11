@@ -41,7 +41,7 @@ defmodule FrontendWeb.SessionController do
 
     conn = put_session(conn, :username, username)
 
-    redirect(conn, to: Routes.task_path(conn, :index))
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
 
 end
