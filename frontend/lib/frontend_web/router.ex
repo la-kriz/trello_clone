@@ -26,6 +26,9 @@ defmodule FrontendWeb.Router do
 
     get "/lists/:list_id/tasks/new", TaskController, :new
     post "/lists/:list_id/tasks", TaskController, :create
+
+    post "/lists/:list_id/tasks/:id", TaskController, :update
+
   end
 
   scope "/", FrontendWeb do
@@ -40,7 +43,6 @@ defmodule FrontendWeb.Router do
 
     get "/lists/:list_id/tasks/:id", TaskController, :show
     get "/lists/:list_id/tasks/:id/edit", TaskController, :edit
-    post "/lists/:list_id/tasks/:id", TaskController, :update
     delete "/tasks/:id/delete", TaskController, :delete
 
     get("/ping", PingController, :show)

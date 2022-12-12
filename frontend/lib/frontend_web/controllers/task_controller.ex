@@ -52,7 +52,11 @@ defmodule FrontendWeb.TaskController do
   def update(conn, %{"list_id" => list_id, "id" => id, "task" => task_params}) do
     body = Jason.encode! %{"task" => task_params}
 
-    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id, body, [{"Content-Type", "application/json"}]
+    access_token = get_session(conn, :access_token)
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id,
+                                    body, headers
 
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
