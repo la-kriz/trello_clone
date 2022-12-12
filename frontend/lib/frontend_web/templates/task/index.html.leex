@@ -38,6 +38,7 @@
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
   <h2><%= @username %></h2>
+  <span><%= link "Logout", to: Routes.session_path(FrontendWeb.Endpoint, :logout) %></span>
 
   <div class="sortable-list-container" style="border: solid; border-color: #a94442; border-width: thin; display: flex; overflow: auto">
 

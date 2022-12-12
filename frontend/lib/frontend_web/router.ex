@@ -30,6 +30,7 @@ defmodule FrontendWeb.Router do
 
     get "/login", SessionController, :get_login
     post "/login", SessionController, :login
+    get "/logout", SessionController, :logout
 
     get "/lists/new", ListController, :new
     delete "/lists/:list_id/", ListController, :delete

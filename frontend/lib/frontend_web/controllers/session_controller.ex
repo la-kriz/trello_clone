@@ -44,4 +44,7 @@ defmodule FrontendWeb.SessionController do
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
 
+  def logout(conn, _params) do
+    redirect(conn, to: Routes.session_path(conn, :new))
+  end
 end
