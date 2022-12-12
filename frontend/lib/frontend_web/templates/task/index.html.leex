@@ -51,20 +51,22 @@
           <!-- HTML generated later -->
         </div>
 
-        <span>
-          <a href="<%= Routes.list_path(FrontendWeb.Endpoint, :delete, list["id"]) %>"
-             data-csrf="<%= @token %>"
-             data-method="delete"
-             data-to="<%= Routes.list_path(FrontendWeb.Endpoint, :delete, list["id"]) %>"
-             rel="nofollow"
-             style="color: gray;"
-          >
-            <span class="icon">
-              <i class="fa fa-trash" style="color: gray; font-size: 2rem;"> </i>
-            </span>
-            Delete List
-          </a>
-        </span>
+        <%= if Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) do %>
+          <span>
+            <a href="<%= Routes.list_path(FrontendWeb.Endpoint, :delete, list["id"]) %>"
+               data-csrf="<%= @token %>"
+               data-method="delete"
+               data-to="<%= Routes.list_path(FrontendWeb.Endpoint, :delete, list["id"]) %>"
+               rel="nofollow"
+               style="color: gray;"
+            >
+              <span class="icon">
+                <i class="fa fa-trash" style="color: gray; font-size: 2rem;"> </i>
+              </span>
+              Delete List
+            </a>
+          </span>
+        <% end %>
 
         <div id="<%= list["id"] %>" class="sortable container" style="width: 410px; ">
           <%= for task <- list["tasks"] do %>
