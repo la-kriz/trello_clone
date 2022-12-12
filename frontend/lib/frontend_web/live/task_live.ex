@@ -86,8 +86,11 @@ defmodule FrontendWeb.TaskLive do
     task_params = %{"position" => D.to_string(new_position_param), "list_id" => list_id}
     body = Jason.encode! %{"task" => task_params}
 
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> current_task_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
   end
@@ -105,8 +108,11 @@ defmodule FrontendWeb.TaskLive do
     task_params = %{"position" => D.to_string(new_position_param), "list_id" => list_id}
     body = Jason.encode! %{"task" => task_params}
 
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> current_task_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
   end
@@ -124,8 +130,11 @@ defmodule FrontendWeb.TaskLive do
     task_params = %{"position" => D.to_string(new_position_param), "list_id" => list_id}
     body = Jason.encode! %{"task" => task_params}
 
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> current_task_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
   end
@@ -146,8 +155,11 @@ defmodule FrontendWeb.TaskLive do
     task_params = %{"position" => D.to_string(new_position_param), "list_id" => list_id}
     body = Jason.encode! %{"task" => task_params}
 
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> current_task_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
   end
