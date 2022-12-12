@@ -159,8 +159,12 @@ defmodule FrontendWeb.TaskLive do
 
     IO.puts ">------------->>>>> called moving LIST at the middle, new/after position is "
         <> ", " <> D.to_string(new_position_param) <> ", " <> after_task_position
+
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
   end
@@ -178,8 +182,12 @@ defmodule FrontendWeb.TaskLive do
 
     IO.puts ">------------->>>>> called moving LIST at the middle, before/new position is " <> before_task_position
             <> ", " <> D.to_string(new_position_param)
+
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
   end
@@ -201,8 +209,12 @@ defmodule FrontendWeb.TaskLive do
 
     IO.puts ">------------->>>>> called moving LIST at the middle, before/new/after position is " <> D.to_string(before_task_position)
             <> ", " <> D.to_string(new_position_param) <> ", "<> D.to_string(after_task_position)
+
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:reply, %{"new_position" => D.to_string(new_position_param)}, socket}
   end
