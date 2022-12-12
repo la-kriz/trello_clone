@@ -19,7 +19,10 @@ defmodule FrontendWeb.ListController do
   end
 
   def delete(conn, %{"list_id" => list_id}) do
-    {:ok, response} = HTTPoison.delete "http://host.docker.internal:4001/api/lists/" <> list_id
+    access_token = get_session(conn, :access_token)
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, _response} = HTTPoison.delete "http://host.docker.internal:4001/api/lists/" <> list_id, headers
 
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
