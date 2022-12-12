@@ -117,19 +117,21 @@
       </div>
     <% end %>
 
-    <div id="add-another-list" class="card" style="width: 410px; height: 50px; margin-left: 10px; margin-right: 10px;
-          background: rgba(255, 255, 255, 0.25); display: flex; justify-content: center;
-          align-content: center; flex-direction: column;"
-    >
-      <span style="width: 410px; ">
-        <a href="<%= Routes.list_path(FrontendWeb.Endpoint, :new) %>" style="color: gray;">
-          <span class="icon">
-            <i class="fa fa-plus" style="color: gray; font-size: 2rem;"> </i>
-          </span>
-          Add another list
-        </a>
-      </span>
-    </div>
+    <%= if Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) do %>
+      <div id="add-another-list" class="card" style="width: 410px; height: 50px; margin-left: 10px; margin-right: 10px;
+            background: rgba(255, 255, 255, 0.25); display: flex; justify-content: center;
+            align-content: center; flex-direction: column;"
+      >
+        <span style="width: 410px; ">
+          <a href="<%= Routes.list_path(FrontendWeb.Endpoint, :new) %>" style="color: gray;">
+            <span class="icon">
+              <i class="fa fa-plus" style="color: gray; font-size: 2rem;"> </i>
+            </span>
+            Add another list
+          </a>
+        </span>
+      </div>
+    <% end %>
 
   </div>
 
