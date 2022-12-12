@@ -62,7 +62,10 @@ defmodule FrontendWeb.TaskController do
   end
 
   def delete(conn, %{"id" => id}) do
-    {:ok, response} = HTTPoison.delete "http://host.docker.internal:4001/api/tasks/" <> id
+    access_token = get_session(conn, :access_token)
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, response} = HTTPoison.delete "http://host.docker.internal:4001/api/tasks/" <> id, headers
 
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
