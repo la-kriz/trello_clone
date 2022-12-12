@@ -26,11 +26,15 @@ defmodule FrontendWeb.TaskLive do
   end
 
   def handle_event("edit_list_title", %{"list_id" => list_id, "new_title" => new_title_param}, socket) do
+
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
     list_params = %{"title" => new_title_param}
     body = Jason.encode! %{"list" => list_params}
 
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id,
-                                    body, [{"Content-Type", "application/json"}]
+                                    body, headers
 
     {:noreply, socket}
   end
