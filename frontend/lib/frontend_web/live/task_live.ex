@@ -57,7 +57,10 @@ defmodule FrontendWeb.TaskLive do
 
     IO.puts "called fetch_comments_of_task w/ " <> task_id
 
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/comments?task_id=" <> task_id
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/comments?task_id=" <> task_id, headers
     {:ok, body} = response.body |> Jason.decode()
 
     data = Enum.map(body["data"], &(&1["content"]))
