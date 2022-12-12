@@ -20,7 +20,10 @@ defmodule FrontendWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live "/", TaskLive
+
     delete "/lists/:list_id/", ListController, :delete
+    get "/lists/new", ListController, :new
+
   end
 
   scope "/", FrontendWeb do
@@ -32,8 +35,6 @@ defmodule FrontendWeb.Router do
     get "/login", SessionController, :get_login
     post "/login", SessionController, :login
     get "/logout", SessionController, :logout
-
-    get "/lists/new", ListController, :new
 
     get "/lists/:list_id/tasks/new", TaskController, :new
     post "/lists/:list_id/tasks", TaskController, :create

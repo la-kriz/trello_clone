@@ -13,7 +13,10 @@ defmodule FrontendWeb.ListController do
   end
 
   def new(conn, _params) do
-    {:ok, _response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/new"
+    access_token = get_session(conn, :access_token)
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, _response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/new", headers
 
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
