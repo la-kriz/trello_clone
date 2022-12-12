@@ -16,6 +16,7 @@ defmodule FrontendWeb.TaskLive do
 
     socket = assign(socket, token: Phoenix.Controller.get_csrf_token())
     socket = assign(socket, username: username)
+    socket = assign(socket, access_token: access_token)
 
     {:ok, socket}
   end
