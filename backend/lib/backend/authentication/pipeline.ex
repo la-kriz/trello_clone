@@ -6,8 +6,12 @@ defmodule Backend.Guardian.AuthPipeline do
     module: Backend.Guardian,
     error_handler: Backend.Guardian.AuthErrorHandler
 
-  plug(Guardian.Plug.VerifyHeader, claims: @claims, realm: "Bearer")
-  plug(Guardian.Plug.EnsureAuthenticated)
-  plug(Guardian.Plug.LoadResource, ensure: true)
+  # If there is a session token, restrict it to an access token and validate it
+  plug Guardian.Plug.VerifySession, claims: @claims
+  # If there is an authorization header, restrict it to an access token and validate it
+  plug Guardian.Plug.VerifyHeader, claims: @claims, scheme: "Bearer"
+  plug Guardian.Plug.EnsureAuthenticated
+  # Load the user if either of the verifications worked
+  plug Guardian.Plug.LoadResource, allow_blank: true
 
 end
