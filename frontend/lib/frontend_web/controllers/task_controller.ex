@@ -21,7 +21,10 @@ defmodule FrontendWeb.TaskController do
   def create(conn, %{"task" => task_params, "list_id" => list_id}) do
     body = Jason.encode! %{"task" => Map.put(task_params, :list_id, list_id)}
 
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks", body, [{"Content-Type", "application/json"}]
+    access_token = get_session(conn, :access_token)
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks", body, headers
 
     {:ok, body} = response.body |> Jason.decode()
 
