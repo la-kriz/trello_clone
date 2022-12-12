@@ -46,7 +46,10 @@ defmodule FrontendWeb.TaskLive do
     comment_params = %{"content" => comment_content, "task_id" => task_id}
     body = Jason.encode! %{"comment" => comment_params}
 
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/comments", body, [{"Content-Type", "application/json"}]
+    access_token = socket.assigns.access_token
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/comments", body, headers
 
     {:ok, body} = response.body |> Jason.decode()
 
