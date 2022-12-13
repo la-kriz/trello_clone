@@ -4,7 +4,8 @@ defmodule FrontendWeb.TaskLive do
   alias Decimal, as: D
 
   def mount(_params,
-        %{"username" => username,
+        %{"user_id" => user_id,
+          "username" => username,
           "access_token" => access_token,
           "permission" => permission,
           "_csrf_token" => _},
@@ -21,6 +22,7 @@ defmodule FrontendWeb.TaskLive do
     end
 
     socket = assign(socket, token: Phoenix.Controller.get_csrf_token())
+    socket = assign(socket, user_id: user_id)
     socket = assign(socket, username: username)
     socket = assign(socket, access_token: access_token)
     socket = assign(socket, permission: permission)
