@@ -298,8 +298,10 @@ Hooks.EditTask = {
 
         const handleClickEvent = function(e) {
             const commentsListElement = document.querySelector("#all-comments-of-task")
-            commentsListElement.innerHTML = ''
-            document.querySelector("#input-field-for-comment").value = ""
+            if (commentsListElement) {
+                commentsListElement.innerHTML = ''
+                document.querySelector("#input-field-for-comment").value = ""
+            }
 
 
             const currentTaskContainer = (e.target.id.startsWith("edit-task-btn-"))
@@ -333,20 +335,22 @@ Hooks.EditTask = {
 
             document.querySelector("#edit-task-form-token").setAttribute("value", csrfToken)
 
-            that.pushEvent('fetch_comments_of_task', {
-                task_id: taskId,
-            }, (reply, ref) => {
-                const commentsListElement = document.querySelector("#all-comments-of-task")
-                commentsListElement.innerHTML = ''
+            if (commentsListElement) {
+                that.pushEvent('fetch_comments_of_task', {
+                    task_id: taskId,
+                }, (reply, ref) => {
+                    const commentsListElement = document.querySelector("#all-comments-of-task")
+                    commentsListElement.innerHTML = ''
 
-                reply.comments.forEach(comment => {
-                    const h3 = document.createElement("h3");
-                    h3.textContent = comment
-                    commentsListElement.appendChild(h3)
+                    reply.comments.forEach(comment => {
+                        const h3 = document.createElement("h3");
+                        h3.textContent = comment
+                        commentsListElement.appendChild(h3)
+                    })
                 })
-            })
 
-            document.querySelector("#task-id-for-comment").setAttribute("value", taskId)
+                document.querySelector("#task-id-for-comment").setAttribute("value", taskId)
+            }
 
             openModal()
         };

@@ -21,18 +21,20 @@
       </div>
     </form>
   </div>
-  <div>
-    <form id="comment-form" action="#" phx-submit="send_comment" data-taskid="">
+  <%= if Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) do %>
+    <div>
+      <form id="comment-form" action="#" phx-submit="send_comment" data-taskid="">
 
-      <label for="all-comments-of-task">Comments</label>
-      <div id="all-comments-of-task"></div>
+        <label for="all-comments-of-task">Comments</label>
+        <div id="all-comments-of-task"></div>
 
-      <input id="input-field-for-comment" name="comment_content" type="text">
-      <input id="task-id-for-comment" name="task_id" type="hidden">
+        <input id="input-field-for-comment" name="comment_content" type="text">
+        <input id="task-id-for-comment" name="task_id" type="hidden">
 
-      <button id="send-comment-btn" type="submit" phx-hook="ClearInputAndAppendNewComment">Send comment</button>
-    </form>
-  </div>
+        <button id="send-comment-btn" type="submit" phx-hook="ClearInputAndAppendNewComment">Send comment</button>
+      </form>
+    </div>
+  <% end %>
 </section>
 <div class="overlay hidden"></div>
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
