@@ -76,7 +76,8 @@
         <div id="<%= list["id"] %>" class="sortable container" style="width: 410px; ">
           <%= for task <- list["tasks"] do %>
 
-            <div id="<%= task["id"] %>" class="box draggable" draggable="true"
+            <div id="<%= task["id"] %>" class="box draggable"
+                 draggable="<%= Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) %>"
                  phx-hook="ReorderTask" data-position="<%= task["position"] %>"
                  style="border: solid; border-color: #a94442; border-width: thin; width: 390px;">
 

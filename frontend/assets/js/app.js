@@ -143,6 +143,10 @@ Hooks.EditListTitle = {
 
 Hooks.ReorderTask = {
     mounted() {
+        if (!this.el.draggable) {
+            return;
+        }
+
         const that = this;
 
         const draggables = document.querySelectorAll('.draggable')
