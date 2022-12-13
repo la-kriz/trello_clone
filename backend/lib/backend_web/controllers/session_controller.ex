@@ -3,17 +3,23 @@ defmodule BackendWeb.SessionController do
 
   alias Backend.Accounts
   alias Backend.Guardian
+  alias Backend.Users
 
   action_fallback BackendWeb.FallbackController
 
   def new(conn, %{"email" => email, "password" => password}) do
     case Accounts.authenticate_user(email, password) do
       {:ok, user} ->
+
+        {:ok, permission} = Users.get_permission_by_user(user.id)
+
         {:ok, access_token, _claims} =
-          Guardian.encode_and_sign(user, %{username: user.username}, token_type: "access", ttl: {30, :day})
+          Guardian.encode_and_sign(user, %{username: user.username, permission: permission.permission},
+            token_type: "access", ttl: {30, :day})
 
         {:ok, refresh_token, _claims} =
-          Guardian.encode_and_sign(user, %{username: user.username}, token_type: "refresh", ttl: {7, :day})
+          Guardian.encode_and_sign(user, %{username: user.username, permission: permission.permission},
+            token_type: "refresh", ttl: {7, :day})
 
         conn
         |> put_resp_cookie("ruid", refresh_token)
