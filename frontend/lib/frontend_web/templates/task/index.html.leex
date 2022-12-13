@@ -40,6 +40,16 @@
 <section class="phx-hero" style="border: solid; border-color: #a94442; border-width: thin">
 
   <h2><%= @username %></h2>
+  <button id="share-btn"
+          class="button"
+          data-csrf="<%= @token %>"
+          style="color: gray; background-color: #eee;"
+  >
+    <span class="icon">
+      <i class="fas fa-share" style="color: gray; font-size: 2rem"></i>
+    </span>
+    <span>Share</span>
+  </button>
   <span><%= link "Logout", to: Routes.session_path(FrontendWeb.Endpoint, :logout) %></span>
 
   <div class="sortable-list-container" style="border: solid; border-color: #a94442; border-width: thin; display: flex; overflow: auto">
