@@ -3,7 +3,13 @@ defmodule FrontendWeb.TaskLive do
 
   alias Decimal, as: D
 
-  def mount(_params, %{"username" => username, "access_token" => access_token, "_csrf_token" => _}, socket) do
+  def mount(_params,
+        %{"username" => username,
+          "access_token" => access_token,
+          "permission" => permission,
+          "_csrf_token" => _},
+        socket) do
+
     headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
     {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists", headers
     {:ok, list_body} = response.body |> Jason.decode()
@@ -17,6 +23,7 @@ defmodule FrontendWeb.TaskLive do
     socket = assign(socket, token: Phoenix.Controller.get_csrf_token())
     socket = assign(socket, username: username)
     socket = assign(socket, access_token: access_token)
+    socket = assign(socket, permission: permission)
 
     {:ok, socket}
   end
