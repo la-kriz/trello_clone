@@ -113,14 +113,16 @@
           <% end %>
         </div>
 
-        <span>
-          <a href="<%= Routes.task_path(FrontendWeb.Endpoint, :new, list["id"]) %>" style="color: gray;">
-            <span class="icon">
-              <i class="fa fa-plus" style="color: gray; font-size: 2rem;"> </i>
-            </span>
-            Add a card
-          </a>
-        </span>
+        <%= if Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) do %>
+          <span>
+            <a href="<%= Routes.task_path(FrontendWeb.Endpoint, :new, list["id"]) %>" style="color: gray;">
+              <span class="icon">
+                <i class="fa fa-plus" style="color: gray; font-size: 2rem;"> </i>
+              </span>
+              Add a card
+            </a>
+          </span>
+        <% end %>
       </div>
     <% end %>
 
