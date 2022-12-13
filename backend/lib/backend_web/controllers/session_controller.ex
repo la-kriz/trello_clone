@@ -3,7 +3,7 @@ defmodule BackendWeb.SessionController do
 
   alias Backend.Accounts
   alias Backend.Guardian
-  alias Backend.Users
+  alias Backend.Access
 
   action_fallback BackendWeb.FallbackController
 
@@ -11,7 +11,7 @@ defmodule BackendWeb.SessionController do
     case Accounts.authenticate_user(email, password) do
       {:ok, user} ->
 
-        {:ok, permission} = Users.get_permission_by_user(user.id)
+        {:ok, permission} = Access.get_permission_by_user(user.id)
 
         {:ok, access_token, _claims} =
           Guardian.encode_and_sign(user, %{username: user.username, permission: permission.permission},

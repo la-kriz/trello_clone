@@ -1,12 +1,12 @@
-defmodule Backend.Users do
+defmodule Backend.Access do
   @moduledoc """
-  The Users context.
+  The Access context.
   """
 
   import Ecto.Query, warn: false
   alias Backend.Repo
 
-  alias Backend.User.UserPermission
+  alias Backend.Access.UserPermission
 
   def get_permission_by_user(user_id) do
     query = from p in UserPermission, where: p.user_id == ^user_id

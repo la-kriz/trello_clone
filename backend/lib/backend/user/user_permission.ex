@@ -1,4 +1,4 @@
-defmodule Backend.User.UserPermission do
+defmodule Backend.Access.UserPermission do
   use Ecto.Schema
   import Ecto.Changeset
   alias Backend.Accounts.User
