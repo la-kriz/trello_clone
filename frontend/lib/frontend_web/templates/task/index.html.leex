@@ -47,7 +47,10 @@
            phx-hook="ReorderList" data-position="<%= list["position"] %>">
 
         <div id="<%= list["id"] %>" class="definitions" phx-hook="EditListTitle">
-          <h2 data-editor-shown="false" data-key="title1"><p><%= list["title"] %></p></h2>
+          <h2 data-editor-shown="false" data-key="title1"
+              data-is-authorized="<%= Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) %>">
+            <p><%= list["title"] %></p>
+          </h2>
           <!-- HTML generated later -->
         </div>
 

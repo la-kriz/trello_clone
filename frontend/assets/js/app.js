@@ -44,6 +44,11 @@ Hooks.EditListTitle = {
         tbody.forEach(function(elem) {
             elem.addEventListener('dblclick', e => {
                 const parent = e.target.parentElement;
+
+                if (parent.dataset.isAuthorized === 'false') {
+                    return;
+                }
+
                 // if somehow the event gets called from something that is NOT one of the TDs, we don't need to go any further from there.
                 // sidenote, all values in the Element.dataset are read as strings. you can set them to be whatever
                 // but when you read them, they will be strings.
@@ -78,6 +83,11 @@ Hooks.EditListTitle = {
 
             // a parent, a row, and a newly minted text node walk into a bar...
             const parent = e.target.parentElement;
+
+            if (parent === null || parent.parentElement.dataset.isAuthorized === 'false') {
+                return;
+            }
+
             // const row = parent.parentElement;
             const text = document.createTextNode(e.target.value || ' ');
             /* .isConnected refers to it's state in the DOM. this was some work to try and stop an error that was
