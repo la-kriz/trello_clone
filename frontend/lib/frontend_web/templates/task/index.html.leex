@@ -49,6 +49,7 @@
 
   <h2><%= @username %></h2>
   <button id="share-btn"
+          phx-hook="ShareToUsersAndAssignPermission"
           class="button"
           data-csrf="<%= @token %>"
           style="color: gray; background-color: #eee;"

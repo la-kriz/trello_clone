@@ -372,6 +372,40 @@ Hooks.EditTask = {
     },
 }
 
+Hooks.ShareToUsersAndAssignPermission = {
+    mounted() {
+        const that = this;
+        const modal = document.querySelector(".share-modal");
+        const overlay = document.querySelector(".overlay");
+        const closeModalBtn = document.querySelector(".btn-close-for-share");
+
+        const openModal = function () {
+
+            modal.classList.remove("hidden");
+            overlay.classList.remove("hidden");
+        };
+
+        const handleClickEvent = function(e) {
+            openModal()
+        };
+
+        that.el.addEventListener("click", handleClickEvent, false);
+
+        const closeModal = function () {
+            modal.classList.add("hidden");
+            overlay.classList.add("hidden");
+        };
+
+        closeModalBtn.addEventListener("click", closeModal);
+        overlay.addEventListener("click", closeModal);
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+                closeModal();
+            }
+        });
+    },
+}
+
 Hooks.ClearInputAndAppendNewComment = {
     mounted() {
         const that = this;
