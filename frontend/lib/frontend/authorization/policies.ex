@@ -7,7 +7,7 @@ defmodule Frontend.Policies do
   @err_handler    MyApp.ErrorHandlers
 
   def policy( assigns, {:user_perm, perms} ) when is_list(perms) do
-    supported_permissions = ["Manage", "Write"]
+    supported_permissions = ["manage", "write"]
     case supported_permissions do
       nil -> {:error, "Unauthorized"}        # Fail. No permissions
       user_perms ->
