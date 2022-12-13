@@ -35,9 +35,11 @@ defmodule FrontendWeb.SessionController do
     access_token = body["access_token"]
 
     {:ok, payload} = TokenImpl.decode_and_verify(access_token)
+    user_id = payload["user_id"]
     username = payload["username"]
     permission = payload["permission"]
 
+    conn = put_session(conn, :user_id, user_id)
     conn = put_session(conn, :username, username)
     conn = put_session(conn, :access_token, access_token)
     conn = put_session(conn, :permission, permission)
@@ -49,6 +51,7 @@ defmodule FrontendWeb.SessionController do
     access_token = get_session(conn, :access_token)
     headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
 
+    conn = delete_session(conn, :user_id)
     conn = delete_session(conn, :username)
     conn = delete_session(conn, :access_token)
 
