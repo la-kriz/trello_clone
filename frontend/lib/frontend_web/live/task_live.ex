@@ -84,7 +84,9 @@ defmodule FrontendWeb.TaskLive do
 
   def handle_event("fetch_usernames_and_id_except_current_user", %{"current_user_id" => current_user_id}, socket) do
 
-    data = [%{id: 1, email: "kriz@gmail.com"}, %{id: 2, email: "johndoe@gmail.com"}, %{id: 3, email: "janedoe@gmail.com"}]
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/users/" <> current_user_id <> "/others"
+    {:ok, body} = response.body |> Jason.decode()
+    data = body["data"]
 
     {:reply, %{"users" => data}, socket}
   end
