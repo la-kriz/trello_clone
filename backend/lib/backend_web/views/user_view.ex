@@ -17,13 +17,12 @@ defmodule BackendWeb.UserView do
       password: user.password}
   end
 
-  def render("user_list_with_permission.json", %{users: users}) do
-    %{data: render_many(users, UserView, "user_with_permission.json")}
+  def render("user_list_for_sharing.json", %{users: users}) do
+    %{data: render_many(users, UserView, "user_for_sharing.json")}
   end
 
-  def render("user_with_permission.json", %{user: user}) do
+  def render("user_for_sharing.json", %{user: user}) do
     %{id: user.id,
-      email: user.email,
-      permission: user.permission}
+      email: user.email}
   end
 end

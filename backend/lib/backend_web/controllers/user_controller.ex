@@ -16,7 +16,7 @@ defmodule BackendWeb.UserController do
 
   def get_other_users(conn, %{"id" => id}) do
     users = Accounts.get_other_users(id)
-    render(conn, "user_list_with_permission.json", users: users)
+    render(conn, "user_list_for_sharing.json", users: users)
   end
 
 end

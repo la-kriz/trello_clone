@@ -31,10 +31,7 @@ defmodule Backend.Accounts do
 
   def get_other_users(id) do
     users = from user in User,
-      join: permission in UserPermission,
-      on: user.id == permission.user_id,
-      where: user.id != ^id,
-      select_merge: %{permission: permission.permission}
+      where: user.id != ^id
     Repo.all(users)
   end
 
