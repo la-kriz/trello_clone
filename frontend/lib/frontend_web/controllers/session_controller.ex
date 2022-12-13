@@ -36,10 +36,11 @@ defmodule FrontendWeb.SessionController do
 
     {:ok, payload} = TokenImpl.decode_and_verify(access_token)
     username = payload["username"]
-    IO.inspect(username, label: ">>>>>> payload username is ")
+    permission = payload["permission"]
 
     conn = put_session(conn, :username, username)
     conn = put_session(conn, :access_token, access_token)
+    conn = put_session(conn, :permission, permission)
 
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
