@@ -14,11 +14,11 @@ defmodule BackendWeb.SessionController do
         {:ok, permission} = Access.get_permission_by_user(user.id)
 
         {:ok, access_token, _claims} =
-          Guardian.encode_and_sign(user, %{username: user.username, permission: permission.permission},
+          Guardian.encode_and_sign(user, %{user_id: user.id, username: user.username, permission: permission.permission},
             token_type: "access", ttl: {30, :day})
 
         {:ok, refresh_token, _claims} =
-          Guardian.encode_and_sign(user, %{username: user.username, permission: permission.permission},
+          Guardian.encode_and_sign(user, %{user_id: user.id, username: user.username, permission: permission.permission},
             token_type: "refresh", ttl: {7, :day})
 
         conn
