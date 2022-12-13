@@ -386,7 +386,11 @@ Hooks.ShareToUsersAndAssignPermission = {
         };
 
         const handleClickEvent = function(e) {
+
+            const currentUserId = document.querySelector("#share-to-other-users").dataset.userId
+
             that.pushEvent('fetch_usernames_and_id_except_current_user', {
+                current_user_id: currentUserId
             }, (reply, ref) => {
                 const usernamesSelectElement = document.querySelector("#usernames-to-share-to")
                 while (usernamesSelectElement.firstChild) {
