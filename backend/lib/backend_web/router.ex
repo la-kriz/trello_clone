@@ -27,6 +27,7 @@ defmodule BackendWeb.Router do
     pipe_through :api
 
     post "/users/register", UserController, :register
+    get "/users/:id/others", UserController, :get_other_users
 
     post "/session/new", SessionController, :new
 

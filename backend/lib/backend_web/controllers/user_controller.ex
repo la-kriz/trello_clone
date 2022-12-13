@@ -13,4 +13,10 @@ defmodule BackendWeb.UserController do
       |> text("User successfully registered with email: " <> " " <> user.email)
     end
   end
+
+  def get_other_users(conn, %{"id" => id}) do
+    users = Accounts.get_other_users(id)
+    render(conn, "user_list_with_permission.json", users: users)
+  end
+
 end
