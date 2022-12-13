@@ -86,27 +86,29 @@
                 <h3 id="current-task-assigned-person"><%= task["assigned_person"] %></h3>
               </div>
 
-              <button id="edit-task-btn-<%= task["id"] %>"
-                      phx-hook="EditTask"
-                      class="button"
-                      data-csrf="<%= @token %>"
-                      style="background-color: white; border-color: white;"
-              >
-                <span class="icon">
-                  <i class="fas fa-edit" style="color: gray; font-size: 2rem"></i>
-                </span>
-              </button>
-              <button class="button"
-                      data-confirm="Are you sure?"
-                      data-method="delete"
-                      data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]) %>"
-                      data-csrf="<%= @token %>"
-                      style="background-color: white; border-color: white;"
-              >
-                <span class="icon">
-                  <i class="fa fa-trash" style="color: gray; font-size: 2rem;"></i>
-                </span>
-              </button>
+              <%= if Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) do %>
+                <button id="edit-task-btn-<%= task["id"] %>"
+                        phx-hook="EditTask"
+                        class="button"
+                        data-csrf="<%= @token %>"
+                        style="background-color: white; border-color: white;"
+                >
+                  <span class="icon">
+                    <i class="fas fa-edit" style="color: gray; font-size: 2rem"></i>
+                  </span>
+                </button>
+                <button class="button"
+                        data-confirm="Are you sure?"
+                        data-method="delete"
+                        data-to="<%= Routes.task_path(FrontendWeb.Endpoint, :delete, task["id"]) %>"
+                        data-csrf="<%= @token %>"
+                        style="background-color: white; border-color: white;"
+                >
+                  <span class="icon">
+                    <i class="fa fa-trash" style="color: gray; font-size: 2rem;"></i>
+                  </span>
+                </button>
+              <% end %>
 
               <br>
             </div>
