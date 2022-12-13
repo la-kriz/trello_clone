@@ -392,7 +392,7 @@ Hooks.ShareToUsersAndAssignPermission = {
             that.pushEvent('fetch_usernames_and_id_except_current_user', {
                 current_user_id: currentUserId
             }, (reply, ref) => {
-                const usernamesSelectElement = document.querySelector("#usernames-to-share-to")
+                const usernamesSelectElement = document.querySelector("#users-to-share-to")
                 while (usernamesSelectElement.firstChild) {
                     usernamesSelectElement.removeChild(usernamesSelectElement.firstChild);
                 }
@@ -464,3 +464,15 @@ liveSocket.connect()
 // Call disableLatencySim() to disable:
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+
+function addUserToShareWith() {
+    const usersSelectElement = document.getElementById('users-to-share-to')
+    const selectedUsername = usersSelectElement.value
+    const permissionsSelectElement = document.getElementById('permissions')
+    const selectedPermission = permissionsSelectElement.value
+    console.log(selectedUsername + ", " + selectedPermission)
+}
+
+const addUserToShareWithBtnElement = document.getElementById('add-user-to-share-with');
+addUserToShareWithBtnElement.addEventListener('click', addUserToShareWith, false);

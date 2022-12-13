@@ -42,13 +42,14 @@
   </div>
   <div id="share-to-other-users" data-user-id="<%= @user_id %>">
     <h1>Share to other Users</h1>
-    <select name="usernames-to-share-to" id="usernames-to-share-to">
+    <select name="users-to-share-to" id="users-to-share-to">
     </select>
     <select name="permissions" id="permissions">
       <option value="0">Manage</option>
       <option value="1">Write</option>
       <option value="2">Read</option>
     </select>
+    <button id="add-user-to-share-with">Add User to Share with</button>
   </div>
 </section>
 <div class="overlay hidden"></div>
