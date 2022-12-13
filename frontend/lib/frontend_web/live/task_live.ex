@@ -82,7 +82,7 @@ defmodule FrontendWeb.TaskLive do
 
   def handle_event("fetch_usernames_and_id_except_current_user", %{}, socket) do
 
-    data = [%{id: 1, username: "kriz"}, %{id: 2, username: "johndoe"}, %{id: 3, username: "janedoe"}]
+    data = [%{id: 1, email: "kriz@gmail.com"}, %{id: 2, email: "johndoe@gmail.com"}, %{id: 3, email: "janedoe@gmail.com"}]
 
     {:reply, %{"users" => data}, socket}
   end

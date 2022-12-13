@@ -396,7 +396,7 @@ Hooks.ShareToUsersAndAssignPermission = {
                 reply.users.forEach(user => {
                     const optionElement = document.createElement("option");
                     optionElement.value = user.id
-                    optionElement.textContent = user.username
+                    optionElement.textContent = user.email
                     usernamesSelectElement.appendChild(optionElement)
                 })
             })
