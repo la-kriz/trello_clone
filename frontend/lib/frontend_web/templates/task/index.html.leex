@@ -43,8 +43,10 @@
   <div class="sortable-list-container" style="border: solid; border-color: #a94442; border-width: thin; display: flex; overflow: auto">
 
     <%= for list <- @lists do %>
-      <div id="<%= list["id"] %>" class="card draggable-list" draggable="true"
-           phx-hook="ReorderList" data-position="<%= list["position"] %>">
+      <div id="<%= list["id"] %>" class="card draggable-list"
+           draggable="<%= Frontend.Policies.authorized?(@socket, {:user_perm, "Read"}) %>"
+           phx-hook="ReorderList" data-position="<%= list["position"] %>"
+      >
 
         <div id="<%= list["id"] %>" class="definitions" phx-hook="EditListTitle">
           <h2 data-editor-shown="false" data-key="title1"
