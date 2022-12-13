@@ -386,6 +386,21 @@ Hooks.ShareToUsersAndAssignPermission = {
         };
 
         const handleClickEvent = function(e) {
+            that.pushEvent('fetch_usernames_and_id_except_current_user', {
+            }, (reply, ref) => {
+                const usernamesSelectElement = document.querySelector("#usernames-to-share-to")
+                while (usernamesSelectElement.firstChild) {
+                    usernamesSelectElement.removeChild(usernamesSelectElement.firstChild);
+                }
+
+                reply.users.forEach(user => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = user.id
+                    optionElement.textContent = user.username
+                    usernamesSelectElement.appendChild(optionElement)
+                })
+            })
+
             openModal()
         };
 
