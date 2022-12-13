@@ -7,6 +7,7 @@ defmodule Backend.Accounts do
   alias Backend.Repo
 
   alias Backend.Accounts.User
+  alias Backend.Access.UserPermission
 
   def create_user(attrs) do
     %User{}
@@ -26,6 +27,15 @@ defmodule Backend.Accounts do
   def get_by_id!(id) do
     User
     |> Repo.get!(id)
+  end
+
+  def get_other_users(id) do
+    users = from user in User,
+      join: permission in UserPermission,
+      on: user.id == permission.user_id,
+      where: user.id != ^id,
+      select_merge: %{permission: permission.permission}
+    Repo.all(users)
   end
 
   def authenticate_user(email, password) do

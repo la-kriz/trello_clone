@@ -6,6 +6,7 @@ defmodule Backend.Accounts.User do
     field :username, :string
     field :email, :string
     field :password, :string
+    field :permission, Ecto.Enum, values: [manage: 0, write: 1, read: 2], virtual: true
 
     timestamps()
   end
