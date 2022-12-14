@@ -18,9 +18,14 @@ defmodule Backend.Access do
   end
 
   def set_permission_by_user_id(user_id, user_permission) do
-    Repo.get_by(UserPermission, user_id: user_id)
-    |> Ecto.Changeset.change(%{permission: user_permission})
-    |> Repo.update()
+    case Repo.get_by(UserPermission, user_id: user_id) do
+
+      nil -> Repo.insert(UserPermission.changeset(%UserPermission{}, %{user_id: user_id, permission: user_permission}))
+
+      existing_permission -> existing_permission
+                             |> Ecto.Changeset.change(%{permission: user_permission})
+                             |> Repo.update()
+    end
   end
 
 end
