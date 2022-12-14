@@ -1,1 +1,3 @@
-Hello, World!
+<%= for board <- @boards do %>
+<%= board["id"] %>, <%= board["title"] %>
+<% end %>
