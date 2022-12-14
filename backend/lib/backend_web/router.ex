@@ -29,6 +29,8 @@ defmodule BackendWeb.Router do
     post "/users/register", UserController, :register
     get "/users/:id/others", UserController, :get_other_users
 
+    post "/permissions/share", PermissionController, :share_to_users
+
     post "/session/new", SessionController, :new
 
   end

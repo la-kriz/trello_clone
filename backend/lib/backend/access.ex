@@ -17,4 +17,10 @@ defmodule Backend.Access do
     end
   end
 
+  def set_permission_by_user_id(user_id, user_permission) do
+    Repo.get_by(UserPermission, user_id: user_id)
+    |> Ecto.Changeset.change(%{permission: user_permission})
+    |> Repo.update()
+  end
+
 end
