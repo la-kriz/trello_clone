@@ -6,8 +6,8 @@ defmodule BackendWeb.ListController do
 
   action_fallback BackendWeb.FallbackController
 
-  def index(conn, _params) do
-    lists = Board.list_lists()
+  def index(conn, %{"board_id" => board_id}) do
+    lists = Board.list_lists(board_id)
     render(conn, "index.json", lists: lists)
   end
 

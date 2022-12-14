@@ -38,7 +38,9 @@ defmodule BackendWeb.Router do
   scope "/api", BackendWeb do
     pipe_through [:api, :auth]
 
-    resources "/lists", ListController, except: [:edit] do
+    get "/boards/:board_id/lists", ListController, :index
+
+    resources "/lists", ListController, except: [:edit, :index] do
       resources "/tasks", TaskController, except: [:new, :edit, :delete]
     end
 

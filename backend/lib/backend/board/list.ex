@@ -2,6 +2,7 @@ defmodule Backend.Board.List do
   use Ecto.Schema
   import Ecto.Changeset
   alias Backend.Board.Task
+  alias Backend.User.Board
 
   @derive {Jason.Encoder, only: [:id, :title, :position, :tasks]}
 
@@ -9,6 +10,7 @@ defmodule Backend.Board.List do
     field :position, :float
     field :title, :string
     has_many :tasks, Task
+    belongs_to :board, Board
 
     timestamps()
   end

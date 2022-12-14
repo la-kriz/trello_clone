@@ -129,13 +129,14 @@ defmodule Backend.Board do
       [%List{}, ...]
 
   """
-  def list_lists do
+  def list_lists(board_id) do
     base_query = from(lists in List);
     lists_with_tasks_preloaded = from(
       list in base_query,
       left_join: task in Task,
       on: task.list_id == list.id,
       preload: [tasks: task],
+      where: list.board_id == ^board_id,
       order_by: list.position,
       order_by: task.position
     )
