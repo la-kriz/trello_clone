@@ -13,8 +13,8 @@ defmodule Backend.Access.UserPermission do
   end
 
   @doc false
-  def changeset(task, attrs) do
-    task
+  def changeset(user_permission, attrs) do
+    user_permission
     |> cast(attrs, [:user_id, :permission])
     |> validate_required([:permission])
     |> assoc_constraint(:user)
