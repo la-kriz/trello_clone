@@ -19,7 +19,7 @@ defmodule FrontendWeb.Router do
   scope "/", FrontendWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    live "/", TaskLive
+    live "/board-name-here", TaskLive
 
     delete "/lists/:list_id/", ListController, :delete
     get "/lists/new", ListController, :new
