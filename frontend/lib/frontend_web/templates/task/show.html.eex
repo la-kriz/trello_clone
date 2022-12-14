@@ -20,4 +20,4 @@
 </ul>
 
 
-<span><%= link "Back", to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive) %></span>
+<span><%= link "Back", to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, @board_title) %></span>

@@ -15,7 +15,10 @@ defmodule FrontendWeb.TaskController do
 
   def new(conn, %{"list_id" => list_id}) do
     changeset = Board.change_task(%Task{})
-    render(conn, "new.html" , changeset: changeset, list_id: list_id)
+
+    board_title = get_session(conn, :board_title)
+
+    render(conn, "new.html" , changeset: changeset, list_id: list_id, board_title: board_title)
   end
 
   def create(conn, %{"task" => task_params, "list_id" => list_id}) do
@@ -28,13 +31,18 @@ defmodule FrontendWeb.TaskController do
 
     {:ok, body} = response.body |> Jason.decode()
 
-    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
+    board_title = get_session(conn, :board_title)
+
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
 
   def show(conn, %{"list_id" => list_id, "id" => id}) do
     {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id
     {:ok, body} = response.body |> Jason.decode()
-    render(conn, "show.html", task: body["data"])
+
+    board_title = get_session(conn, :board_title)
+
+    render(conn, "show.html", task: body["data"], board_title: board_title)
   end
 
   def edit(conn, %{"list_id" => list_id, "id" => id}) do
@@ -46,7 +54,9 @@ defmodule FrontendWeb.TaskController do
 
     changeset = Board.change_task(task)
 
-    render(conn, "edit.html", task: task, changeset: changeset, list_id: list_id)
+    board_title = get_session(conn, :board_title)
+
+    render(conn, "edit.html", task: task, changeset: changeset, list_id: list_id, board_title: board_title)
   end
 
   def update(conn, %{"list_id" => list_id, "id" => id, "task" => task_params}) do
@@ -58,7 +68,9 @@ defmodule FrontendWeb.TaskController do
     {:ok, response} = HTTPoison.put "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id,
                                     body, headers
 
-    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
+    board_title = get_session(conn, :board_title)
+
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
 
   def delete(conn, %{"id" => id}) do
@@ -67,7 +79,9 @@ defmodule FrontendWeb.TaskController do
 
     {:ok, response} = HTTPoison.delete "http://host.docker.internal:4001/api/tasks/" <> id, headers
 
-    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
+    board_title = get_session(conn, :board_title)
+
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
 
 end

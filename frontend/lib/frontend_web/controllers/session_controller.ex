@@ -10,6 +10,7 @@ defmodule FrontendWeb.SessionController do
     render(conn, "new.html", changeset: changeset)
   end
 
+  #TODO: get board id to pass to new, register, get_login
   def register(conn, %{"user" => user_params}) do
     body = Jason.encode! %{"user" => user_params}
 
