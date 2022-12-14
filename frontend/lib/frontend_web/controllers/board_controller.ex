@@ -20,9 +20,9 @@ defmodule FrontendWeb.BoardController do
 
   def show(conn, %{"board_id" => board_id}) do
 
-    IO.inspect board_id, label: ">>>>>>>> board_id"
+    conn = put_session(conn, :board_id, board_id)
 
-    conn
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
   end
 
 end

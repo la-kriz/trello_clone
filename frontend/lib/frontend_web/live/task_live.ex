@@ -8,10 +8,10 @@ defmodule FrontendWeb.TaskLive do
           "username" => username,
           "access_token" => access_token,
           "permission" => permission,
+          "board_id" => board_id,
           "_csrf_token" => _},
         socket) do
 
-    board_id = "1"
     headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
     {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/boards/" <> board_id <> "/lists", headers
     {:ok, list_body} = response.body |> Jason.decode()
@@ -27,6 +27,7 @@ defmodule FrontendWeb.TaskLive do
     socket = assign(socket, username: username)
     socket = assign(socket, access_token: access_token)
     socket = assign(socket, permission: permission)
+    socket = assign(socket, board_id: board_id)
 
     {:ok, socket}
   end
