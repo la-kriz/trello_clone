@@ -22,6 +22,18 @@ defmodule Frontend.Policies do
   def policy( assigns, {:manage_and_write_allowed, one_perm} ), do:
     policy( assigns, {:manage_and_write_allowed, [one_perm]} )
 
+  def policy( assigns, {:manage_only_allowed, perm} ) do
+    supported_permissions = "manage"
+    case supported_permissions do
+      nil -> {:error, "Unauthorized"}        # Fail. No permissions
+      user_perm ->
+        case user_perm === perm do
+          true -> :ok                   # Success.
+          false -> {:error, "Unauthorized"}  # Fail. Permission missing
+        end
+    end
+  end
+
 #  def policy_error(conn, error_data) when is_bitstring(error_data), do:
 #    @err_handler.unauthorized(conn, error_data )
   def policy_error(conn, error_data), do: policy_error(conn, "Unauthorized" )
