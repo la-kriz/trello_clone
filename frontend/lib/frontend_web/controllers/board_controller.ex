@@ -18,11 +18,12 @@ defmodule FrontendWeb.BoardController do
     render(conn, "index.html", boards: data, csrf_token: csrf_token)
   end
 
-  def show(conn, %{"board_id" => board_id}) do
+  def show(conn, %{"board_id" => board_id, "board_title" => board_title}) do
 
     conn = put_session(conn, :board_id, board_id)
+    conn = put_session(conn, :board_title, board_title)
 
-    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive))
+    redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
 
 end
