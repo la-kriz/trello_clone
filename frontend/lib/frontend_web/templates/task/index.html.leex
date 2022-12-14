@@ -21,7 +21,7 @@
       </div>
     </form>
   </div>
-  <%= if Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) do %>
+  <%= if Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) do %>
     <div>
       <form id="comment-form" action="#" phx-submit="send_comment" data-taskid="">
 
@@ -85,19 +85,19 @@
 
     <%= for list <- @lists do %>
       <div id="<%= list["id"] %>" class="card draggable-list"
-           draggable="<%= Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) %>"
+           draggable="<%= Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) %>"
            phx-hook="ReorderList" data-position="<%= list["position"] %>"
       >
 
         <div id="<%= list["id"] %>" class="definitions" phx-hook="EditListTitle">
           <h2 data-editor-shown="false" data-key="title1"
-              data-is-authorized="<%= Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) %>">
+              data-is-authorized="<%= Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) %>">
             <p><%= list["title"] %></p>
           </h2>
           <!-- HTML generated later -->
         </div>
 
-        <%= if Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) do %>
+        <%= if Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) do %>
           <span>
             <a href="<%= Routes.list_path(FrontendWeb.Endpoint, :delete, list["id"]) %>"
                data-csrf="<%= @token %>"
@@ -118,7 +118,7 @@
           <%= for task <- list["tasks"] do %>
 
             <div id="<%= task["id"] %>" class="box draggable"
-                 draggable="<%= Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) %>"
+                 draggable="<%= Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) %>"
                  phx-hook="ReorderTask" data-position="<%= task["position"] %>"
                  style="border: solid; border-color: #a94442; border-width: thin; width: 390px;">
 
@@ -128,7 +128,7 @@
                 <h3 id="current-task-assigned-person"><%= task["assigned_person"] %></h3>
               </div>
 
-              <%= if Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) do %>
+              <%= if Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) do %>
                 <button id="edit-task-btn-<%= task["id"] %>"
                         phx-hook="EditTask"
                         class="button"
@@ -157,7 +157,7 @@
           <% end %>
         </div>
 
-        <%= if Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) do %>
+        <%= if Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) do %>
           <span>
             <a href="<%= Routes.task_path(FrontendWeb.Endpoint, :new, list["id"]) %>" style="color: gray;">
               <span class="icon">
@@ -170,7 +170,7 @@
       </div>
     <% end %>
 
-    <%= if Frontend.Policies.authorized?(@socket, {:user_perm, @permission}) do %>
+    <%= if Frontend.Policies.authorized?(@socket, {:manage_and_write_allowed, @permission}) do %>
       <div id="add-another-list" class="card" style="width: 410px; height: 50px; margin-left: 10px; margin-right: 10px;
             background: rgba(255, 255, 255, 0.25); display: flex; justify-content: center;
             align-content: center; flex-direction: column;"

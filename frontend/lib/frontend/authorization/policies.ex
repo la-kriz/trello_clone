@@ -6,7 +6,7 @@ defmodule Frontend.Policies do
 
   @err_handler    MyApp.ErrorHandlers
 
-  def policy( assigns, {:user_perm, perms} ) when is_list(perms) do
+  def policy( assigns, {:manage_and_write_allowed, perms} ) when is_list(perms) do
     supported_permissions = ["manage", "write"]
     case supported_permissions do
       nil -> {:error, "Unauthorized"}        # Fail. No permissions
@@ -19,8 +19,8 @@ defmodule Frontend.Policies do
     end
   end
 
-  def policy( assigns, {:user_perm, one_perm} ), do:
-    policy( assigns, {:user_perm, [one_perm]} )
+  def policy( assigns, {:manage_and_write_allowed, one_perm} ), do:
+    policy( assigns, {:manage_and_write_allowed, [one_perm]} )
 
 #  def policy_error(conn, error_data) when is_bitstring(error_data), do:
 #    @err_handler.unauthorized(conn, error_data )
