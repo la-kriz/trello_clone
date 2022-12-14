@@ -1,3 +1,13 @@
-<%= for board <- @boards do %>
-<%= board["id"] %>, <%= board["title"] %>
-<% end %>
+<form id="select-board-form" method="post" action="/boards">
+  <input name="_csrf_token" type="hidden" value="<%= @csrf_token %>">
+
+  <select name="board_id" id="boards">
+    <%= for board <- @boards do %>
+      <%= board["id"] %>, <%= board["title"] %>
+      <option value="<%= board["id"] %>"><%= board["title"] %></option>
+    <% end %>
+  </select>
+
+  <button type="submit">Go to Board</button>
+
+</form>

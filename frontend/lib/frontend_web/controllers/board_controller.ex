@@ -13,7 +13,16 @@ defmodule FrontendWeb.BoardController do
 
     data = board_body["data"]
 
-    render(conn, "index.html", boards: data)
+    csrf_token = Phoenix.Controller.get_csrf_token()
+
+    render(conn, "index.html", boards: data, csrf_token: csrf_token)
+  end
+
+  def show(conn, %{"board_id" => board_id}) do
+
+    IO.inspect board_id, label: ">>>>>>>> board_id"
+
+    conn
   end
 
 end

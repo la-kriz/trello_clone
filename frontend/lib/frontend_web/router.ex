@@ -20,6 +20,7 @@ defmodule FrontendWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/", BoardController, :index
+    post "/boards", BoardController, :show
 
     live "/board-name-here", TaskLive
 
