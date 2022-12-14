@@ -468,10 +468,40 @@ window.liveSocket = liveSocket
 
 function addUserToShareWith() {
     const usersSelectElement = document.getElementById('users-to-share-to')
-    const selectedUsername = usersSelectElement.value
+    const selectedUserId = usersSelectElement.value
+    const selectedUser = usersSelectElement.selectedOptions[0].textContent
     const permissionsSelectElement = document.getElementById('permissions')
-    const selectedPermission = permissionsSelectElement.value
-    console.log(selectedUsername + ", " + selectedPermission)
+    const selectedPermission = permissionsSelectElement.selectedOptions[0].textContent
+    console.log(selectedUserId + ": " + selectedUser + ", " + selectedPermission)
+
+    const selectedUsersTable = document.getElementById('users-to-share-table')
+
+    let latestIndexToAssign = selectedUsersTable.dataset.latestIndexToAssign
+
+    const tableRowElement = document.createElement("tr");
+    selectedUsersTable.appendChild(tableRowElement)
+
+    const emailTextTableData = document.createElement("td");
+    emailTextTableData.textContent = selectedUser
+    tableRowElement.appendChild(emailTextTableData)
+
+    const emailInput = document.createElement("input");
+    emailInput.setAttribute("name", "users[" + latestIndexToAssign + "][user_id]")
+    emailInput.setAttribute("type", "hidden")
+    emailInput.setAttribute("value", selectedUserId)
+    tableRowElement.appendChild(emailInput)
+
+    const permissionTextTableData = document.createElement("td");
+    permissionTextTableData.textContent = selectedPermission
+    tableRowElement.appendChild(permissionTextTableData)
+
+    const permissionInput = document.createElement("input");
+    permissionInput.setAttribute("name", "users[" + latestIndexToAssign + "][user_permission]")
+    permissionInput.setAttribute("type", "hidden")
+    permissionInput.setAttribute("value", selectedPermission.toLowerCase())
+    tableRowElement.appendChild(permissionInput)
+
+    selectedUsersTable.dataset.latestIndexToAssign = latestIndexToAssign + 1
 }
 
 const addUserToShareWithBtnElement = document.getElementById('add-user-to-share-with');
