@@ -50,6 +50,30 @@
       <option value="2">Read</option>
     </select>
     <button id="add-user-to-share-with">Add User to Share with</button>
+    <form id="selected-users-form" phx-submit="share_to_users" method="post" action="">
+
+      <table>
+        <tr>
+          <th>User email</th>
+          <th>Permission</th>
+        </tr>
+        <tr>
+          <td>kriz@gmail.com</td>
+          <input name="users[0][user_id]" type="hidden" value="kriz@gmail.com">
+          <td>Manage</td>
+          <input name="users[0][user_permission]" type="hidden" value="Manage">
+        </tr>
+        <tr>
+          <td>johndoe@gmail.com</td>
+          <input name="users[1][user_id]" type="hidden" value="johndoe@gmail.com">
+          <td>Manage</td>
+          <input name="users[1][user_permission]" type="hidden" value="Manage">
+        </tr>
+      </table>
+
+      <button id="share-to-selected-users-btn" type="submit">Share to Selected Users</button>
+    </form>
+
   </div>
 </section>
 <div class="overlay hidden"></div>

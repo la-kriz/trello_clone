@@ -91,6 +91,13 @@ defmodule FrontendWeb.TaskLive do
     {:reply, %{"users" => data}, socket}
   end
 
+  def handle_event("share_to_users", %{"users" => user_params}, socket) do
+
+    IO.inspect user_params, label: ">>>>>>>>> user_params"
+
+    {:reply, %{}, socket}
+  end
+
   def handle_event("reorder_task", %{
     "list_id" => list_id,
     "current_task_id" => current_task_id,
