@@ -13,4 +13,19 @@
 
 </form>
 
+<hr>
+
+<div style="border: solid; border-color: lightgray; border-width: thin; padding: 10px;">
+  <form id="create-board-form" method="post" action="/boards/create">
+    <input name="_csrf_token" type="hidden" value="<%= @csrf_token %>">
+
+    <label for="board-title">Title</label>
+    <input id="board-title" name="board_title" type="text">
+
+    <button type="submit">Create Board</button>
+  </form>
+</div>
+
+<hr>
+
 <span><%= link "Logout", to: Routes.session_path(FrontendWeb.Endpoint, :logout) %></span>
