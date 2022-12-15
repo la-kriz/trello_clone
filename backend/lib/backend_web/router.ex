@@ -39,6 +39,7 @@ defmodule BackendWeb.Router do
     pipe_through [:api, :auth]
 
     get "/boards/users/:user_id", BoardController, :index
+    post "/boards/create", BoardController, :create
 
     get "/boards/:board_id/lists", ListController, :index
 
