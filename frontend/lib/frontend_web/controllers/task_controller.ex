@@ -23,15 +23,6 @@ defmodule FrontendWeb.TaskController do
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
 
-  def show(conn, %{"list_id" => list_id, "id" => id}) do
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id
-    {:ok, body} = response.body |> Jason.decode()
-
-    board_title = get_session(conn, :board_title)
-
-    render(conn, "show.html", task: body["data"], board_title: board_title)
-  end
-
   def edit(conn, %{"list_id" => list_id, "id" => id}) do
     {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id
     {:ok, body} = response.body |> Jason.decode()
