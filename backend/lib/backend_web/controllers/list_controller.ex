@@ -35,7 +35,9 @@ defmodule BackendWeb.ListController do
     list = Board.get_list!(id)
 
     with {:ok, %List{} = list} <- Board.update_list(list, list_params) do
-      render(conn, "show.json", list: list)
+      conn
+      |> put_status(200)
+      |> text("List updated successfully.")
     end
   end
 
