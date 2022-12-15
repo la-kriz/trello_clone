@@ -13,10 +13,15 @@ defmodule FrontendWeb.ListController do
   end
 
   def new(conn, _params) do
+
+    board_id = get_session(conn, :board_id)
+
+    body = Jason.encode! %{"board_id" => board_id}
+
     access_token = get_session(conn, :access_token)
     headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
 
-    {:ok, _response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/new", headers
+    {:ok, _response} = HTTPoison.post "http://host.docker.internal:4001/api/lists/new", body, headers
 
     board_title = get_session(conn, :board_title)
 
