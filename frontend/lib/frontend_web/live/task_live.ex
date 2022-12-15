@@ -200,16 +200,17 @@ defmodule FrontendWeb.TaskLive do
 
   def handle_event("reorder_list", %{
     "list_id" => list_id,
+    "before_task_position" => before_task_position,
     "current_task_position" => current_task_position,
     "after_task_position" => after_task_position
-  }, socket) do
+  }, socket)  when is_nil(before_task_position) do
 
     new_position_param = D.sub(after_task_position, D.new(50))
 
     task_params = %{"position" => D.to_string(new_position_param)}
     body = Jason.encode! %{"list" => task_params}
 
-    IO.puts ">------------->>>>> called moving LIST at the middle, new/after position is "
+    IO.puts ">------------->>>>> called moving LIST at the left-most, new/after position is "
         <> ", " <> D.to_string(new_position_param) <> ", " <> after_task_position
 
     access_token = socket.assigns.access_token
@@ -224,15 +225,16 @@ defmodule FrontendWeb.TaskLive do
   def handle_event("reorder_list", %{
     "list_id" => list_id,
     "before_task_position" => before_task_position,
-    "current_task_position" => current_task_position
-  }, socket) do
+    "current_task_position" => current_task_position,
+    "after_task_position" => after_task_position
+  }, socket) when is_nil(after_task_position) do
 
     new_position_param = D.add(before_task_position, D.new(50))
 
     task_params = %{"position" => D.to_string(new_position_param)}
     body = Jason.encode! %{"list" => task_params}
 
-    IO.puts ">------------->>>>> called moving LIST at the middle, before/new position is " <> before_task_position
+    IO.puts ">------------->>>>> called moving LIST at the right-most, before/new position is " <> before_task_position
             <> ", " <> D.to_string(new_position_param)
 
     access_token = socket.assigns.access_token
