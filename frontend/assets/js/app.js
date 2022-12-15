@@ -433,7 +433,6 @@ Hooks.ClearInputAndAppendNewComment = {
             document.getElementById("comment-form").dispatchEvent(
                 new Event("submit", {bubbles: true})
             )
-            window.history.pushState({}, document.title, "/");
 
             const inputField = document.querySelector("#input-field-for-comment")
             const newComment = inputField.value
