@@ -4,6 +4,8 @@ defmodule FrontendWeb.TaskController do
   alias Frontend.Api.Board
   alias Frontend.Api.Board.Task
 
+  alias FrontendWeb.ApiClient.TaskApiClient
+
   def new(conn, %{"list_id" => list_id}) do
     changeset = Board.change_task(%Task{})
 
@@ -13,14 +15,8 @@ defmodule FrontendWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params, "list_id" => list_id}) do
-    body = Jason.encode! %{"task" => Map.put(task_params, :list_id, list_id)}
 
-    access_token = get_session(conn, :access_token)
-    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
-
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks", body, headers
-
-    {:ok, body} = response.body |> Jason.decode()
+    TaskApiClient.create_task(conn, %{"task" => task_params, "list_id" => list_id})
 
     board_title = get_session(conn, :board_title)
 
