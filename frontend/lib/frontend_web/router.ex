@@ -23,7 +23,7 @@ defmodule FrontendWeb.Router do
     live "/boards/:current_board", TaskLive
   end
 
-    scope "/", FrontendWeb do
+  scope "/", FrontendWeb do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/", BoardController, :index

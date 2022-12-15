@@ -4,15 +4,6 @@ defmodule FrontendWeb.TaskController do
   alias Frontend.Api.Board
   alias Frontend.Api.Board.Task
 
-  def index(conn, _params) do
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists"
-    {:ok, list_body} = response.body |> Jason.decode()
-
-    data = list_body["data"]
-
-    render(conn, "index.html", tasks: data)
-  end
-
   def new(conn, %{"list_id" => list_id}) do
     changeset = Board.change_task(%Task{})
 
