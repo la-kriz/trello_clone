@@ -7,7 +7,6 @@ defmodule Backend.User.Board do
   schema "boards" do
     field :title, :string
     field :owner_user_id, :integer
-    belongs_to :board, Board
 
     timestamps()
   end
