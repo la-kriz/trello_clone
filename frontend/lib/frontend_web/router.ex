@@ -37,7 +37,7 @@ defmodule FrontendWeb.Router do
     get "/lists/:list_id/tasks/new", TaskController, :new
     post "/lists/:list_id/tasks", TaskController, :create
 
-    post "/lists/:list_id/tasks/:id", TaskController, :update
+    post "/boards/lists/:list_id/tasks/:id", TaskController, :update
 
     delete "/tasks/:id/delete", TaskController, :delete
 

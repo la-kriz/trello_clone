@@ -52,6 +52,7 @@ defmodule BackendWeb.Router do
 
     resources "/comments", CommentController, except: [:new, :edit]
 
+    post "/boards/lists/:list_id/tasks/:id", TaskController, :update
     delete "/tasks/:id", TaskController, :delete
 
     post "/session/refresh", SessionController, :refresh
