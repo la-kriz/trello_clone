@@ -12,3 +12,5 @@
   <button type="submit">Go to Board</button>
 
 </form>
+
+<span><%= link "Logout", to: Routes.session_path(FrontendWeb.Endpoint, :logout) %></span>
