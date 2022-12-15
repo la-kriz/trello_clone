@@ -505,4 +505,21 @@ function addUserToShareWith() {
 }
 
 const addUserToShareWithBtnElement = document.getElementById('add-user-to-share-with');
-addUserToShareWithBtnElement.addEventListener('click', addUserToShareWith, false);
+if (addUserToShareWithBtnElement) {
+    addUserToShareWithBtnElement.addEventListener('click', addUserToShareWith, false);
+}
+
+
+
+function setBoardTitleFromSelected() {
+    const boardsSelectElement = document.getElementById('boards');
+    const selectedOption = boardsSelectElement.querySelector("#option-" + boardsSelectElement.value)
+    const boardTitle = selectedOption.textContent
+    const boardTitleInput = document.getElementById('selected-board-title');
+    boardTitleInput.setAttribute("value", boardTitle)
+}
+
+const selectBoardButtonElement = document.getElementById('select-board-btn');
+if (selectBoardButtonElement) {
+    selectBoardButtonElement.addEventListener('click', setBoardTitleFromSelected, false);
+}
