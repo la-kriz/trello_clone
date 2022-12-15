@@ -52,8 +52,6 @@ defmodule FrontendWeb.Router do
     get "/login", SessionController, :get_login
     post "/login", SessionController, :login
     get "/logout", SessionController, :logout
-
-    live "/lists/title", ListsTitleLive
   end
 
   # Other scopes may use custom stacks.
