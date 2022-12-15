@@ -8,8 +8,10 @@ defmodule Backend.Access do
 
   alias Backend.Access.UserPermission
 
-  def get_permission_by_user(user_id) do
-    query = from p in UserPermission, where: p.user_id == ^user_id
+  def get_permission_by_user_and_board(user_id, board_id) do
+    query = from p in UserPermission,
+                 where: p.user_id == ^user_id,
+                 where: p.board_id == ^board_id
 
     case Repo.one(query) do
       nil -> {:error, :not_found}

@@ -16,4 +16,10 @@ defmodule BackendWeb.PermissionController do
     |> put_status(:ok)
   end
 
+  def get_permission_by_user_and_board(conn, %{"user_id" => user_id, "board_id" => board_id}) do
+    {:ok, permission} = Access.get_permission_by_user_and_board(user_id, board_id)
+
+    render(conn, "show.json", permission: permission)
+  end
+
 end

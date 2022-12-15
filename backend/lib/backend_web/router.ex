@@ -41,6 +41,8 @@ defmodule BackendWeb.Router do
     get "/boards/users/:user_id", BoardController, :index
     post "/boards/create", BoardController, :create
 
+    get "/permissions/users/:user_id/boards/:board_id", PermissionController, :get_permission_by_user_and_board
+
     get "/boards/:board_id/lists", ListController, :index
 
     resources "/lists", ListController, except: [:edit, :index] do
