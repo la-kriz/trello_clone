@@ -42,17 +42,13 @@ defmodule FrontendWeb.SessionController do
   end
 
   def logout(conn, _params) do
-    access_token = get_session(conn, :access_token)
-    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    SessionApiClient.logout(conn)
 
     conn = delete_session(conn, :user_id)
     conn = delete_session(conn, :username)
     conn = delete_session(conn, :access_token)
-
-    body = Jason.encode! %{}
-
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/session/delete",
-                                     body, headers
+    conn = delete_session(conn, :permission)
 
     redirect(conn, to: Routes.session_path(conn, :new))
   end
