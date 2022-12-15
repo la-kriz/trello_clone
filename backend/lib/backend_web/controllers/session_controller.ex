@@ -11,7 +11,10 @@ defmodule BackendWeb.SessionController do
     case Accounts.authenticate_user(email, password) do
       {:ok, user} ->
 
-        {:ok, permission} = Access.get_permission_by_user(user.id)
+        {:ok, permission} = case Access.get_permission_by_user(user.id) do
+          {:ok, perm} -> {:ok, perm}
+          {:error, :not_found} -> {:ok, %{permission: nil}}
+        end
 
         {:ok, access_token, _claims} =
           Guardian.encode_and_sign(user, %{user_id: user.id, username: user.username, permission: permission.permission},
