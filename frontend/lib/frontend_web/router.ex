@@ -28,6 +28,7 @@ defmodule FrontendWeb.Router do
 
     get "/", BoardController, :index
     post "/boards", BoardController, :show
+    post "/boards/create", BoardController, :create
 
     delete "/lists/:list_id/", ListController, :delete
     get "/lists/new", ListController, :new
