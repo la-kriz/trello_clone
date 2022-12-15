@@ -38,20 +38,11 @@ defmodule FrontendWeb.BoardController do
 
   def create(conn, %{"board_title" => board_title}) do
 
-    user_id = get_session(conn, :user_id)
+    new_board = BoardApiClient.create_board(conn, %{"board_title" => board_title})
 
-    body = Jason.encode! %{"title" => board_title, "owner_user_id" => user_id}
-
-    access_token = get_session(conn, :access_token)
-    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
-
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/boards/create", body, headers
-
-    {:ok, body} = response.body |> Jason.decode()
-
-    conn = put_session(conn, :board_id, Integer.to_string(body["id"]))
+    conn = put_session(conn, :board_id, Integer.to_string(new_board["id"]))
     conn = put_session(conn, :board_title, board_title)
-    conn = put_session(conn, :permission, body["permission"])
+    conn = put_session(conn, :permission, new_board["permission"])
 
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
