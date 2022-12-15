@@ -26,4 +26,9 @@ defmodule FrontendWeb.BoardController do
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
 
+  def show(conn, %{}) do
+
+    redirect(conn, to: Routes.board_path(conn, :index))
+  end
+
 end
