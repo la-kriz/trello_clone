@@ -5,17 +5,16 @@ defmodule FrontendWeb.SessionController do
   alias Frontend.Api.Accounts.User
   alias Frontend.Guardian, as: TokenImpl
 
+  alias FrontendWeb.ApiClient.SessionApiClient
+
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
     render(conn, "new.html", changeset: changeset)
   end
 
-  #TODO: get board id to pass to new, register, get_login
   def register(conn, %{"user" => user_params}) do
-    body = Jason.encode! %{"user" => user_params}
 
-    {:ok, _response} = HTTPoison.post "http://host.docker.internal:4001/api/users/register",
-                                     body, [{"Content-Type", "application/json"}]
+    SessionApiClient.register(conn, %{"user" => user_params})
 
     redirect(conn, to: Routes.session_path(conn, :get_login))
   end
