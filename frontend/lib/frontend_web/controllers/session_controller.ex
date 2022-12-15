@@ -25,14 +25,8 @@ defmodule FrontendWeb.SessionController do
   end
 
   def login(conn, %{"user" => user_params}) do
-    body = Jason.encode! %{"email" => user_params["email"], "password" => user_params["password"]}
 
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/session/new",
-                                     body, [{"Content-Type", "application/json"}]
-
-    {:ok, body} = response.body |> Jason.decode()
-
-    access_token = body["access_token"]
+    access_token = SessionApiClient.login(conn, %{"email" => user_params["email"], "password" => user_params["password"]})
 
     {:ok, payload} = TokenImpl.decode_and_verify(access_token)
     user_id = payload["user_id"]
