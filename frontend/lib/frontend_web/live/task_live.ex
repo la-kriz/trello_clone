@@ -97,7 +97,9 @@ defmodule FrontendWeb.TaskLive do
 
     IO.inspect user_params, label: ">>>>>>>>> user_params"
 
-    body = Jason.encode! %{"users" => user_params}
+    board_id = socket.assigns.board_id
+
+    body = Jason.encode! %{"users" => user_params, "board_id" => board_id}
     headers = [{:"Content-Type", "application/json"}]
 
     {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/permissions/share", body, headers
