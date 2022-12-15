@@ -2,6 +2,7 @@ defmodule FrontendWeb.Router do
   use FrontendWeb, :router
 
   import FrontendWeb.Plugs.RedirectUnauthenticated
+  import FrontendWeb.Plugs.RedirectNoBoardAccess
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -17,12 +18,16 @@ defmodule FrontendWeb.Router do
   end
 
   scope "/", FrontendWeb do
+    pipe_through [:browser, :require_authenticated_user, :require_user_has_access_to_board]
+
+    live "/boards/:current_board", TaskLive
+  end
+
+    scope "/", FrontendWeb do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/", BoardController, :index
     post "/boards", BoardController, :show
-
-    live "/boards/:current_board", TaskLive
 
     delete "/lists/:list_id/", ListController, :delete
     get "/lists/new", ListController, :new
