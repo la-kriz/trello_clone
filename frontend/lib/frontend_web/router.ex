@@ -22,7 +22,7 @@ defmodule FrontendWeb.Router do
     get "/", BoardController, :index
     post "/boards", BoardController, :show
 
-    live "/:current_board", TaskLive
+    live "/boards/:current_board", TaskLive
 
     delete "/lists/:list_id/", ListController, :delete
     get "/lists/new", ListController, :new
