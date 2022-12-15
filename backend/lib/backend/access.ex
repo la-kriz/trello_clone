@@ -28,4 +28,10 @@ defmodule Backend.Access do
     end
   end
 
+  def create_user_permission(attrs \\ %{}) do
+    %UserPermission{}
+    |> UserPermission.changeset(attrs)
+    |> Repo.insert()
+  end
+
 end

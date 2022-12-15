@@ -20,6 +20,8 @@ defmodule Backend.User do
     Repo.all(boards_in_user_permissions_filtered_by_user_id)
   end
 
+  def get_board!(id), do: Repo.get!(Board, id)
+
   def create_board(attrs \\ %{}) do
     %Board{}
     |> Board.changeset(attrs)

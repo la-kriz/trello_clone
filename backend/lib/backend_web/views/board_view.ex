@@ -14,4 +14,11 @@ defmodule BackendWeb.BoardView do
     %{id: board.id,
       title: board.title}
   end
+
+  def render("board_with_permission.json", %{board_with_permission: board_with_permission}) do
+    %{id: board_with_permission.id,
+      title: board_with_permission.title,
+      permission: board_with_permission.permission
+    }
+  end
 end
