@@ -11,8 +11,9 @@ defmodule BackendWeb.ListController do
     render(conn, "index.json", lists: lists)
   end
 
-  def new(conn, _params) do
-    {:ok, changeset} = Board.create_list(%{title: "No title set...", position: System.os_time(:second), tasks: []})
+  def new(conn, %{"board_id" => board_id}) do
+    attr = %{title: "No title set...", position: System.os_time(:second), tasks: [], board_id: board_id}
+    {:ok, changeset} = Board.create_list(attr)
 
     render(conn, "show.json" , list: changeset)
   end

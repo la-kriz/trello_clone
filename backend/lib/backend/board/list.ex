@@ -18,8 +18,8 @@ defmodule Backend.Board.List do
   @doc false
   def changeset(list, attrs) do
     list
-    |> cast(attrs, [:title, :position])
+    |> cast(attrs, [:title, :position, :board_id])
     |> cast_assoc(:tasks)
-    |> validate_required([:title, :position])
+    |> validate_required([:title, :position, :board_id])
   end
 end
