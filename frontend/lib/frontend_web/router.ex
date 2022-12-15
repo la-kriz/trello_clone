@@ -56,9 +56,6 @@ defmodule FrontendWeb.Router do
     get "/lists/:list_id/tasks/:id", TaskController, :show
     get "/lists/:list_id/tasks/:id/edit", TaskController, :edit
 
-    get("/ping", PingController, :show)
-    get("/hello", PingController, :hello)
-
     live "/lists/title", ListsTitleLive
   end
 
