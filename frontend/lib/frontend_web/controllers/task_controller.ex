@@ -23,20 +23,6 @@ defmodule FrontendWeb.TaskController do
     redirect(conn, to: Routes.live_path(FrontendWeb.Endpoint, FrontendWeb.TaskLive, board_title))
   end
 
-  def edit(conn, %{"list_id" => list_id, "id" => id}) do
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/lists/" <> list_id <> "/tasks/" <> id
-    {:ok, body} = response.body |> Jason.decode()
-    data = body["data"]
-
-    task = %Task{id: data["id"], title: data["title"], description: data["description"], assigned_person: data["assigned_person"]}
-
-    changeset = Board.change_task(task)
-
-    board_title = get_session(conn, :board_title)
-
-    render(conn, "edit.html", task: task, changeset: changeset, list_id: list_id, board_title: board_title)
-  end
-
   def update(conn, %{"list_id" => list_id, "id" => id, "task" => task_params}) do
     body = Jason.encode! %{"task" => task_params}
 
