@@ -23,4 +23,11 @@ defmodule FrontendWeb.ApiClient.TaskApiClient do
                                      body, headers
   end
 
+  def delete_task(conn, %{"id" => id}) do
+
+    access_token = get_session(conn, :access_token)
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, _response} = HTTPoison.delete "http://host.docker.internal:4001/api/tasks/" <> id, headers
+  end
 end
