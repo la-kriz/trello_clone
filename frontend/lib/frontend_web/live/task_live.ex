@@ -6,6 +6,7 @@ defmodule FrontendWeb.TaskLive do
   alias FrontendWeb.ApiClient.ListApiClient
   alias FrontendWeb.ApiClient.TaskApiClient
   alias FrontendWeb.ApiClient.PermissionApiClient
+  alias FrontendWeb.ApiClient.UserApiClient
 
   def mount(_params,
         %{"user_id" => user_id,
@@ -87,11 +88,9 @@ defmodule FrontendWeb.TaskLive do
 
   def handle_event("fetch_usernames_and_id_except_current_user", %{"current_user_id" => current_user_id}, socket) do
 
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/users/" <> current_user_id <> "/others"
-    {:ok, body} = response.body |> Jason.decode()
-    data = body["data"]
+    other_users = UserApiClient.get_other_users(%{"current_user_id" => current_user_id})
 
-    {:reply, %{"users" => data}, socket}
+    {:reply, %{"users" => other_users}, socket}
   end
 
   def handle_event("share_to_users", %{"users" => user_params}, socket) do
