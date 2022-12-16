@@ -55,17 +55,11 @@ defmodule FrontendWeb.TaskLive do
 
   def handle_event("send_comment", %{"comment_content" => comment_content, "task_id" => task_id}, socket) do
 
-    IO.puts "called send_comment w/ " <> comment_content <> " and task id of " <> task_id
-
     comment_params = %{"content" => comment_content, "task_id" => task_id}
-    body = Jason.encode! %{"comment" => comment_params}
 
     access_token = socket.assigns.access_token
-    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
 
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/comments", body, headers
-
-    {:ok, body} = response.body |> Jason.decode()
+    CommentApiClient.add_comment_to_task(%{"comment_params" => comment_params, "access_token" => access_token})
 
     {:noreply, socket}
   end

@@ -11,4 +11,12 @@ defmodule FrontendWeb.ApiClient.CommentApiClient do
     Enum.map(body["data"], &(&1["content"]))
   end
 
+  def add_comment_to_task(%{"comment_params" => comment_params, "access_token" => access_token}) do
+
+    body = Jason.encode! %{"comment" => comment_params}
+
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, _response} = HTTPoison.post "http://host.docker.internal:4001/api/comments", body, headers
+  end
 end
