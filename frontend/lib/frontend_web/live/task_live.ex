@@ -5,6 +5,7 @@ defmodule FrontendWeb.TaskLive do
 
   alias FrontendWeb.ApiClient.ListApiClient
   alias FrontendWeb.ApiClient.TaskApiClient
+  alias FrontendWeb.ApiClient.PermissionApiClient
 
   def mount(_params,
         %{"user_id" => user_id,
@@ -99,12 +100,7 @@ defmodule FrontendWeb.TaskLive do
 
     board_id = socket.assigns.board_id
 
-    body = Jason.encode! %{"users" => user_params, "board_id" => board_id}
-    headers = [{:"Content-Type", "application/json"}]
-
-    {:ok, response} = HTTPoison.post "http://host.docker.internal:4001/api/permissions/share", body, headers
-
-    {:ok, body} = response.body |> Jason.decode()
+    PermissionApiClient.share_to_users(%{"users" => user_params, "board_id" => board_id})
 
     {:reply, %{}, socket}
   end

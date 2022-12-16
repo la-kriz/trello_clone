@@ -14,4 +14,12 @@ defmodule FrontendWeb.ApiClient.PermissionApiClient do
     permission_body["data"]
   end
 
+  def share_to_users(%{"users" => user_params, "board_id" => board_id}) do
+
+    body = Jason.encode! %{"users" => user_params, "board_id" => board_id}
+    headers = [{:"Content-Type", "application/json"}]
+
+    {:ok, _response} = HTTPoison.post "http://host.docker.internal:4001/api/permissions/share", body, headers
+  end
+
 end
