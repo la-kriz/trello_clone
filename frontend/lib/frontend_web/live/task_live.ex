@@ -7,6 +7,7 @@ defmodule FrontendWeb.TaskLive do
   alias FrontendWeb.ApiClient.TaskApiClient
   alias FrontendWeb.ApiClient.PermissionApiClient
   alias FrontendWeb.ApiClient.UserApiClient
+  alias FrontendWeb.ApiClient.CommentApiClient
 
   def mount(_params,
         %{"user_id" => user_id,
@@ -71,19 +72,11 @@ defmodule FrontendWeb.TaskLive do
 
   def handle_event("fetch_comments_of_task", %{"task_id" => task_id}, socket) do
 
-    IO.puts "called fetch_comments_of_task w/ " <> task_id
-
     access_token = socket.assigns.access_token
-    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
 
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/comments?task_id=" <> task_id, headers
-    {:ok, body} = response.body |> Jason.decode()
+    comments = CommentApiClient.get_comments_of_task(%{"task_id" => task_id, "access_token" => access_token})
 
-    data = Enum.map(body["data"], &(&1["content"]))
-
-    IO.puts data
-
-    {:reply, %{"comments" => data}, socket}
+    {:reply, %{"comments" => comments}, socket}
   end
 
   def handle_event("fetch_usernames_and_id_except_current_user", %{"current_user_id" => current_user_id}, socket) do
