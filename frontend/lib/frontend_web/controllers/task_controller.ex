@@ -25,7 +25,9 @@ defmodule FrontendWeb.TaskController do
 
   def update(conn, %{"list_id" => list_id, "id" => id, "task" => task_params}) do
 
-    TaskApiClient.update_task(conn, %{"list_id" => list_id, "id" => id, "task" => task_params})
+    access_token = get_session(conn, :access_token)
+
+    TaskApiClient.update_task(%{"list_id" => list_id, "id" => id, "task" => task_params, "access_token" => access_token})
 
     board_title = get_session(conn, :board_title)
 
