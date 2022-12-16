@@ -18,13 +18,11 @@ defmodule FrontendWeb.TaskLive do
           "_csrf_token" => _},
         socket) do
 
-    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
-    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/boards/" <> board_id <> "/lists", headers
-    {:ok, list_body} = response.body |> Jason.decode()
+    lists = ListApiClient.get_lists_by_current_board(%{"access_token" => access_token, "board_id" => board_id})
 
-    socket = case list_body["data"] do
+    socket = case lists do
       nil -> assign(socket, lists: [])
-      _ -> data = list_body["data"]
+      _ -> data = lists
            assign(socket, lists: data)
     end
 

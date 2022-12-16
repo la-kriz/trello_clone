@@ -1,6 +1,16 @@
 defmodule FrontendWeb.ApiClient.ListApiClient do
   import Plug.Conn, only: [get_session: 2]
 
+  def get_lists_by_current_board(%{"access_token" => access_token, "board_id" => board_id}) do
+
+    headers = [{:"Authorization", "Bearer #{access_token}"}, {:"Content-Type", "application/json"}]
+
+    {:ok, response} = HTTPoison.get "http://host.docker.internal:4001/api/boards/" <> board_id <> "/lists", headers
+    {:ok, list_body} = response.body |> Jason.decode()
+
+    list_body["data"]
+  end
+
   def update_list(%{"list_id" => list_id, "params" => list_params, "access_token" => access_token}) do
 
     body = Jason.encode! %{"list" => list_params}
